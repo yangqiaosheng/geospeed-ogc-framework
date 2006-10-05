@@ -7,6 +7,16 @@ public class OgcResponse implements IOgcResponse
 	private String responseType = "";
     private byte[] data = new byte[1]; 
 
+    public OgcResponse()
+    {
+        
+    }
+    
+    public OgcResponse(byte[] _data)
+    {
+        data = _data;
+    }
+    
 	public int getLength() 
 	{
 		return data.length;
