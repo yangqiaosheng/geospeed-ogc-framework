@@ -1,15 +1,15 @@
 <web-app>
 	<servlet>
 		<servlet-name>WMS</servlet-name>
-		<servlet-class>com.fgm.jp.ogc.impl.wms.web.OgcWmsServlet</servlet-class>
+		<servlet-class>org.geospeed.ogc.impl.wms.web.OgcWmsServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>WFS</servlet-name>
-		<servlet-class>com.fgm.jp.ogc.impl.wfs.web.OgcWfsServlet</servlet-class>
+		<servlet-class>org.geospeed.ogc.impl.wfs.web.OgcWfsServlet</servlet-class>
 	</servlet>
 	<servlet>
 		<servlet-name>WCS</servlet-name>
-		<servlet-class>com.fgm.jp.ogc.impl.wcs.web.OgcWcsServlet</servlet-class>
+		<servlet-class>org.geospeed.ogc.impl.wcs.web.OgcWcsServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
