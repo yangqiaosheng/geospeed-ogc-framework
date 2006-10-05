@@ -27,7 +27,7 @@ public abstract class AbstractOgcServlet extends HttpServlet
      * Gathers the list of request parameters into an IOgcMap.  The keys that
      * access the IOgcMap are UPPERCASE Strings.
      * 
-     * @return an IOgcMap containing all of the parameters in the HttpRequest
+     * @return an IOgcMap containing all of the parameters in the HttpRequest.
      */
     public IOgcMap gatherRequestParameters(HttpServletRequest httpReq)
     {
@@ -43,6 +43,13 @@ public abstract class AbstractOgcServlet extends HttpServlet
         return params;
     }
     
+    /**
+     * Sends the contents of the IOgcResponse through the stream from the
+     * HttpServletResponse
+     * 
+     * @param httpRes The HttpServletResponse created when this servlet was called.
+     * @param ogcRes The IOgcResponse created by the IOgcService implementation.
+     */
     public void sendResponse(HttpServletResponse httpRes, IOgcResponse ogcRes)
     {
         try

@@ -1,8 +1,5 @@
 package org.geospeed.ogc.impl.wcs.web;
 
-import java.io.IOException;
-
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

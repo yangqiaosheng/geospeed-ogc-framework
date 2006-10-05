@@ -1,10 +1,5 @@
 package org.geospeed.ogc.impl.wfs.web;
 
-import java.io.IOException;
-import java.util.Enumeration;
-
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -12,11 +7,19 @@ import org.apache.log4j.Logger;
 import org.geospeed.ogc.api.IOgcMap;
 import org.geospeed.ogc.api.IOgcResponse;
 import org.geospeed.ogc.api.IOgcService;
-import org.geospeed.ogc.impl.OgcHashMap;
 import org.geospeed.ogc.impl.web.AbstractOgcServlet;
 import org.geospeed.ogc.impl.wfs.OgcWebFeatureService;
 
-
+/********************************************************************************
+ * 
+ * This is the entry point for the web version of the GeoSpeed Web Feature Service
+ * implementation.  This servlet is a simple dispatcher that is responsible for
+ * gathering the request parameters, calling the appropriate IOgcService
+ * implementation, and returning the results.
+ * 
+ * @author Mike Abner
+ *
+ ********************************************************************************/
 public class OgcWfsServlet extends AbstractOgcServlet
 {
     private static final long serialVersionUID = 0;
