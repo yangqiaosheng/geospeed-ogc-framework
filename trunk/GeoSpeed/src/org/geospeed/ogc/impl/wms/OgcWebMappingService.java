@@ -48,11 +48,11 @@ public class OgcWebMappingService implements IOgcService
         }
         catch (IOException ioe)
         {
-            System.out.println(ioe.getMessage());
+            return new OgcResponse(ioe.getLocalizedMessage().getBytes());
         }
         
         if (wmsRequest == null)
-            return new OgcResponse();
+            return new OgcResponse("There was an error creating the WMS request object.".getBytes());
         
         /*
          * Create an IOgcRequestProcessor object based on the value of the REQUEST entry
@@ -67,7 +67,7 @@ public class OgcWebMappingService implements IOgcService
         }
         catch (IOException ioe)
         {
-            System.out.println(ioe.getMessage());
+            return new OgcResponse(ioe.getLocalizedMessage().getBytes());
         }
         
         /*
@@ -87,11 +87,11 @@ public class OgcWebMappingService implements IOgcService
             }
             catch (Exception e)
             {
-                System.out.println(e.getMessage());
+                return new OgcResponse(e.getLocalizedMessage().getBytes());
             }
         }
         else
-            wmsResponse = new OgcResponse();
+            wmsResponse = new OgcResponse("There was no valid request processor available.".getBytes());
         
         return wmsResponse;
     }

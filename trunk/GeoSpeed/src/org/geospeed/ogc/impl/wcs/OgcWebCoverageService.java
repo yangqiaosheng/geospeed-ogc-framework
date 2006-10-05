@@ -23,8 +23,11 @@ public class OgcWebCoverageService implements IOgcService
         }
         catch (IOException ioe)
         {
-            System.out.println(ioe.getMessage());
+            return new OgcResponse(ioe.getLocalizedMessage().getBytes());
         }
+        
+        if (wcsRequest == null)
+            return new OgcResponse("There was an error creating the WCS request object.".getBytes());
         
         //Create a processor to create the appropriate response content based on the request type
         IOgcRequestProcessor processor = null;
@@ -36,7 +39,7 @@ public class OgcWebCoverageService implements IOgcService
         }
         catch (IOException ioe)
         {
-            System.out.println(ioe.getMessage());
+            return new OgcResponse(ioe.getLocalizedMessage().getBytes());
         }
         
         //Process the request
@@ -50,7 +53,7 @@ public class OgcWebCoverageService implements IOgcService
             }
             catch (Exception e)
             {
-                System.out.println(e.getMessage());
+                return new OgcResponse(e.getLocalizedMessage().getBytes());
             }
         }
         else
