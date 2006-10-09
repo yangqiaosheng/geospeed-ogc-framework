@@ -3,6 +3,10 @@ package org.geospeed.ogc.impl;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 public abstract class AbstractOgcImage
 {
@@ -29,5 +33,21 @@ public abstract class AbstractOgcImage
     public BufferedImage getImage()
     {
         return bi;
+    }
+
+    public ByteArrayOutputStream writeImage(String format)
+    {
+        ByteArrayOutputStream os = new ByteArrayOutputStream();
+        
+        try
+        {
+            ImageIO.write(bi, format, os);
+        }
+        catch (IOException ioe)
+        {
+            ioe.printStackTrace();
+        }
+        
+        return os;
     }
 }
