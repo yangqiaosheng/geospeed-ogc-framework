@@ -45,7 +45,7 @@ public class OgcWmsGetCapabilitiesLayer130 implements IOgcXmlResponse
         title = layerTitle;
     }
     
-    public String getCrs()
+    public String getLayerCrs()
     {
         return crs;
     }
