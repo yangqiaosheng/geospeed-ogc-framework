@@ -12,6 +12,7 @@ public class OgcWmsGetCapabilitiesLayer130 implements IOgcXmlResponse
     private String crs = null;
     private String xml = null;
     
+    
     public OgcWmsGetCapabilitiesLayer130()
     {
         
@@ -67,7 +68,8 @@ public class OgcWmsGetCapabilitiesLayer130 implements IOgcXmlResponse
     
     public String getXml()
     {
-        String xml = "<Layer><Name>" + name + "</Name><Title>" + title + "</Title><CRS>" + crs + "</CRS></Layer>";
+        xml = new String();
+        xml = "<Layer><Name>" + name + "</Name><Title>" + title + "</Title><CRS>" + crs + "</CRS></Layer>";
         
         return xml;
     }
