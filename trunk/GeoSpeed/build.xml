@@ -9,7 +9,9 @@
 	<target name="compile" description="Compile all sources.">
 	    <mkdir dir="classes" />
 		<mkdir dir="bin"/>
-	    <javac srcdir="src" destdir="classes" classpath="./lib/log4j-1.2.13.jar;./lib/j2ee.jar;./lib/junit.jar"/>
+	    <javac srcdir="src" destdir="classes" 
+	    	classpath="./lib/log4j-1.2.13.jar;./lib/j2ee.jar;./lib/junit.jar"
+	    	debug="true" debuglevel="lines,vars,source"/>
 	 </target>
 
 	<target name="test" description="Run some tests">

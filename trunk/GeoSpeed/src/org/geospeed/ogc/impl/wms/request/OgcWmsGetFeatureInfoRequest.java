@@ -1,6 +1,7 @@
 package org.geospeed.ogc.impl.wms.request;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -102,5 +103,28 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
     public Map getVendorSpecificParams()
     {
         return vendorSpecificParams;
+    }
+
+    public String toString()
+    {
+        String s = "REQUEST: " + request;
+        s += "\nSERVICE: " + service;
+        s += "\nVERSION: " + version;
+        s += "\nINFO_FORMAT: " + infoFormat;
+        s += "\nFEATURE_COUNT: " + featureCount;
+        s += "\nI: " + i;
+        s += "\nJ: " + j;
+        s += "\nEXCEPTIONS: " + exceptions;
+        
+        for (Iterator i = queryLayers.iterator(); i.hasNext();)
+            s += "\nLAYER: " + (String)i.next();
+        
+        for (Iterator i = vendorSpecificParams.keySet().iterator(); i.hasNext();)
+        {
+            String key = (String)i.next();
+            s += "\n" + key + ": " + vendorSpecificParams.get(key);
+        }
+        
+        return s;
     }
 }

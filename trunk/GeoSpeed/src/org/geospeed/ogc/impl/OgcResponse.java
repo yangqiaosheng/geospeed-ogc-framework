@@ -4,7 +4,8 @@ import org.geospeed.ogc.api.IOgcResponse;
 
 public class OgcResponse implements IOgcResponse 
 {
-	private String responseType = "";
+	private String contentType = "";
+    private String responseType = "";
     private byte[] data = new byte[1]; 
 
     public OgcResponse()
@@ -32,14 +33,24 @@ public class OgcResponse implements IOgcResponse
 		return data;
 	}
 
-	public String getResponseType() 
+    public String getResponseType()
+    {
+        return responseType;
+    }
+    
+    public void setResponseType(String _responseType)
+    {
+        responseType = _responseType;
+    }
+    
+	public String getContentType() 
 	{
-		return responseType;
+		return contentType;
 	}
 	
-	public void setResponseType(String _responseType)
+	public void setContentType(String _contentType)
 	{
-		responseType = _responseType;
+		contentType = _contentType;
 	}
 
     public void setData(byte[] _data)

@@ -13,7 +13,7 @@ public class MockWcsDescribeCoverageProcessor implements IOgcRequestProcessor
     {
         IOgcWcsRequest req = (IOgcWcsRequest)request;
         OgcResponse res = new OgcResponse();
-        res.setResponseType(req.getRequest());
+        res.setContentType(req.getRequest());
         return res;
     }
 }

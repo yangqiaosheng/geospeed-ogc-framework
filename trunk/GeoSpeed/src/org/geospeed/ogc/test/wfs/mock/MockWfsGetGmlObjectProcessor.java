@@ -13,7 +13,7 @@ public class MockWfsGetGmlObjectProcessor implements IOgcRequestProcessor
     {
         IOgcWfsRequest req = (IOgcWfsRequest)request;
         OgcResponse res = new OgcResponse();
-        res.setResponseType(req.getRequest());
+        res.setContentType(req.getRequest());
         return res;
     }
 }

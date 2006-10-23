@@ -14,7 +14,7 @@ public class MockWmsGetCapabilitiesProcessor implements IOgcRequestProcessor
 	{
 		IOgcWmsRequest req = (IOgcWmsRequest)request;
 		OgcResponse res = new OgcResponse();
-		res.setResponseType(req.getRequest());
+		res.setContentType(req.getRequest());
 		return res;
 	}
 

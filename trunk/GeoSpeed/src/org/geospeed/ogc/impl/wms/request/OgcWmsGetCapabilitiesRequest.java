@@ -1,5 +1,6 @@
 package org.geospeed.ogc.impl.wms.request;
 
+import java.util.Iterator;
 import java.util.Map;
 
 import org.geospeed.ogc.api.IOgcMap;
@@ -47,5 +48,21 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
     public Map getVendorSpecificParams()
     {
         return vendorSpecificParams;
+    }
+
+    public String toString()
+    {
+        String s = "REQUEST: " + request;
+        s += "\nSERVICE: " + service;
+        s += "\nVERSION: " + version;
+        s += "\nUPDATESEQUENCE: " + updateSequence;
+        
+        for (Iterator i = vendorSpecificParams.keySet().iterator(); i.hasNext();)
+        {
+            String key = (String)i.next();
+            s += "\n" + key + ": " + vendorSpecificParams.get(key);
+        }
+        
+        return s;
     }
 }

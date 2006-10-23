@@ -56,4 +56,6 @@ public interface IOgcResponse
 	  * in the data array.
 	  */
 	 public String getResponseType();
+     
+     public String getContentType();
 }

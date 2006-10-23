@@ -54,6 +54,8 @@ public abstract class AbstractOgcServlet extends HttpServlet
     {
         try
         {
+            httpRes.setContentType(ogcRes.getContentType());
+            httpRes.setContentLength(ogcRes.getLength());
             ServletOutputStream sos = httpRes.getOutputStream();
             sos.write(ogcRes.getBytes());
             sos.flush();

@@ -392,28 +392,28 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
             xml = xml + "<Format>" + (String)i.next() + "</Format>";
         
         xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getCapLocation + "'/></Get>" +
-        "</HTTP></DCPType></GetCapabilities>" +
+        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getCapLocation + "'/></Post></HTTP></DCPType></GetCapabilities>" +
         "<GetMap>";
         
         for (Iterator i = getMapFormat.iterator(); i.hasNext();)
             xml = xml + "<Format>" + (String)i.next() + "</Format>";
         
         xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getMapLocation + "'/></Get>" +
-        "</HTTP></DCPType></GetMap>" +
+        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getMapLocation + "'/></Post></HTTP></DCPType></GetMap>" +
         "<GetFeatureInfo>";
         
         for (Iterator i = featureInfoFormat.iterator(); i.hasNext();)
             xml = xml + "<Format>" + (String)i.next() + "</Format>";
         
         xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getFeatureInfoLocation + "'/></Get>" +
-        "</HTTP></DCPType></GetFeatureInfo>" +
+        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getFeatureInfoLocation + "'/></Post></HTTP></DCPType></GetFeatureInfo>" +
         "<DescribeLayer>";
         
         for (Iterator i = describeLayerFormat.iterator(); i.hasNext();)
             xml = xml + "<Format>" + (String)i.next() + "</Format>";
 
         xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getDescribeLayerLocation + "'/></Get>" +
-        "</HTTP></DCPType></DescribeLayer></Request>" +
+        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getDescribeLayerLocation + "'/></Post></HTTP></DCPType></DescribeLayer></Request>" +
         "<Exception>";
         
         for (Iterator i = getExceptionFormat().iterator(); i.hasNext();)

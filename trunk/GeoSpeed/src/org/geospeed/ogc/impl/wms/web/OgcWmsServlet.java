@@ -28,6 +28,7 @@ public class OgcWmsServlet extends AbstractOgcServlet
     
 	public void doGet(HttpServletRequest httpReq, HttpServletResponse httpRes)
 	{
+        System.out.println("Starting " + httpReq.getMethod() + " request recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser());
         log.info("Starting " + httpReq.getMethod() + " request recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser());
         long start = System.currentTimeMillis();
         
@@ -42,4 +43,9 @@ public class OgcWmsServlet extends AbstractOgcServlet
         log.info("Finished processing " + httpReq.getMethod() + " request that was recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser());
         log.trace("Execution time: " + (end - start));
 	}
+
+	public void doPost(HttpServletRequest httpReq, HttpServletResponse httpRes)
+    {
+	    doGet(httpReq, httpRes);
+    }
 }
