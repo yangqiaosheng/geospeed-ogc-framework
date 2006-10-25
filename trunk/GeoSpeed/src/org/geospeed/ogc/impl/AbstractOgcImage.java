@@ -27,7 +27,7 @@ public abstract class AbstractOgcImage
         Graphics2D g = bi.createGraphics();
         
         g.setColor(color);
-        g.drawOval(x, y, diameter, diameter);
+        g.fillOval(x, y, diameter, diameter);
     }
     
     public BufferedImage getImage()
