@@ -28,16 +28,22 @@ public class OgcWmsServlet extends AbstractOgcServlet
     
 	public void doGet(HttpServletRequest httpReq, HttpServletResponse httpRes)
 	{
-        System.out.println("Starting " + httpReq.getMethod() + " request recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser());
         log.info("Starting " + httpReq.getMethod() + " request recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser());
         long start = System.currentTimeMillis();
         
+        log.debug("Attempting to gather parameters from the http request.");
         IOgcMap params = gatherRequestParameters(httpReq);
+        log.debug("Successfully gathered the request parameters.");
         
         IOgcService wms = new OgcWebMappingService();
+        
+        log.debug("Attempting to execute the WMS request.");
         IOgcResponse wmsRes = wms.executeRequest(params);
-                
+        log.debug("Successfully executed the WMS request.");
+        
+        log.debug("Attempting to send the IOgcResponse.");
         sendResponse(httpRes, wmsRes);
+        log.debug("Successfully sent the IOgcResponse.");
         
         long end = System.currentTimeMillis();
         log.info("Finished processing " + httpReq.getMethod() + " request that was recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser());
