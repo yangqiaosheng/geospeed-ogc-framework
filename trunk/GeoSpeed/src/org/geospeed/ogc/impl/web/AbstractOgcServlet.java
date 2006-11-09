@@ -53,7 +53,7 @@ public abstract class AbstractOgcServlet extends HttpServlet
      * @param ogcRes The IOgcResponse created by the IOgcService implementation.
      */
     public void sendResponse(HttpServletResponse httpRes, IOgcResponse ogcRes)
-    {
+    {        
         try
         {
             httpRes.setContentType(ogcRes.getContentType());

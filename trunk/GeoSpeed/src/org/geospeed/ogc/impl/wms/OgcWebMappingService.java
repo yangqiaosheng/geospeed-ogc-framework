@@ -26,10 +26,11 @@ import org.geospeed.ogc.impl.OgcResponse;
  */
 public class OgcWebMappingService implements IOgcService 
 {
-    Logger log = Logger.getLogger(OgcWebMappingService.class);
+    private Logger log = Logger.getLogger(OgcWebMappingService.class);
     
 	public IOgcResponse executeRequest(IOgcMap params)
 	{
+        log.debug("Entering executeRequest(IOgcMap).");
         /*
          * Create an IOgcWmsRequest object based on the REQUEST
          * entry in the params Map.  When REQUEST == GetCapabilities, the
@@ -44,15 +45,22 @@ public class OgcWebMappingService implements IOgcService
         
         try
         {
+            log.debug("Attempting to create an IOgcWmsRequest from the specified parameters.");
             wmsRequest = (IOgcWmsRequest)OgcWmsRequestFactory.createWmsRequest(params);    
+            log.debug("Successfully created an IOgcWmsRequest from the specified parameters.");
         }
         catch (IOException ioe)
         {
+            log.error("Caught an IOException while trying to create the IOgcWmsRequest from the specified parameters.");
+            ioe.printStackTrace();
             return new OgcResponse(ioe.getLocalizedMessage().getBytes());
         }
         
         if (wmsRequest == null)
+        {
+            log.error("An IOgcWmsRequest could not be created from the specified parameters.");
             return new OgcResponse("There was an error creating the WMS request object.".getBytes());
+        }
         
         /*
          * Create an IOgcRequestProcessor object based on the value of the REQUEST entry
@@ -63,10 +71,14 @@ public class OgcWebMappingService implements IOgcService
         
         try
         {
+            log.debug("Attempting to create an IOgcRequestProcessor from the IOgcWmsRequest.");
             processor = processorFactory.createProcessor(wmsRequest.getRequest());
+            log.debug("Successfully created an IOgcRequestProcessor from the IOgcWmsRequest.");
         }
         catch (IOException ioe)
         {
+            log.error("Caught an IOException while trying to create an IOgcRequestProcessor for the REQUEST parameter '" + wmsRequest.getRequest() + "'");
+            ioe.printStackTrace();
             return new OgcResponse(ioe.getLocalizedMessage().getBytes());
         }
         
@@ -83,16 +95,24 @@ public class OgcWebMappingService implements IOgcService
         {
             try
             {
-                 wmsResponse = processor.processRequest(wmsRequest);
+                log.debug("Attempting to process the IOgcWmsRequest.");
+                wmsResponse = processor.processRequest(wmsRequest);
+                log.debug("Successfully processed the IOgcWmsRequest.");
             }
             catch (Exception e)
             {
+                log.error("An error occured while processing the IOgcWmsRequest.");
+                e.printStackTrace();
                 return new OgcResponse(e.getLocalizedMessage().getBytes());
             }
         }
         else
+        {
+            log.error("An IOgcRequestProcessor could not be created from the REQUEST paramenter '" + wmsRequest.getRequest() + "'");
             wmsResponse = new OgcResponse("There was no valid request processor available.".getBytes());
+        }
         
+        log.debug("Exiting executeRequest(IOgcMap).");
         return wmsResponse;
     }
 }

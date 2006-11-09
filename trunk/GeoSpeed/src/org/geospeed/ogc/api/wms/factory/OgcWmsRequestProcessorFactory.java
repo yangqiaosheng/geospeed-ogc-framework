@@ -68,7 +68,7 @@ import org.geospeed.ogc.api.IOgcRequestProcessor;
 public class OgcWmsRequestProcessorFactory
 {	
 	private static OgcWmsRequestProcessorFactory me;
-	private Logger log = Logger.getLogger(OgcWmsRequestProcessorFactory.class);
+	private static Logger log = Logger.getLogger(OgcWmsRequestProcessorFactory.class);
     private Properties processors = new Properties();
 	private boolean loaded = false;
     private String msgPart1 = "An error occured loading the ";
@@ -87,9 +87,15 @@ public class OgcWmsRequestProcessorFactory
      */
 	public static OgcWmsRequestProcessorFactory getInstance()
 	{
-		if (me == null)
-            me = new OgcWmsRequestProcessorFactory();		
+        log.debug("Entering getInstance().");
         
+		if (me == null)
+        {
+            log.debug("Creating an OgcWmsRequestProcessorFactory.");
+            me = new OgcWmsRequestProcessorFactory();       
+        }
+        
+        log.debug("Exiting getInstance().");        
 		return me;
 	}
 	
@@ -106,12 +112,16 @@ public class OgcWmsRequestProcessorFactory
      */
 	public IOgcRequestProcessor createProcessor(String requestParameter) throws IOException
     {	
+        log.debug("Entering createProcessor(String).");
+        
 		if (!me.loaded)
 		{
+            log.debug("Opening the processor.properties file from the classpath.");
 			InputStream is = me.getClass().getClassLoader().getResourceAsStream("processors.properties");
             
             if (is == null)
             {
+                log.error("Could not find the processor.properties file on the classpath.");
                 throw new IOException("Could not find the processor.properties file.  Check to make sure the" +
                         "processor.properties file (or the folder that contains that file) is on the classpath of your application");
             }
@@ -122,17 +132,19 @@ public class OgcWmsRequestProcessorFactory
 		
 		Class processor;
 		
-        log.debug("requestParameter == " + requestParameter);
+        log.debug("Creating an IOgcRequestProcessor based on the REQUEST parameter '" + requestParameter + "'");
         
         if (requestParameter.equalsIgnoreCase("GetCapabilities"))
         {
         	try
         	{
         		processor = Class.forName(processors.getProperty("WmsGetCapabilitiesProcessor"));
+                log.debug("Exiting createProcessor(String).  Returning WmsGetCapabilitiesProcessor.");
         		return (IOgcRequestProcessor)processor.newInstance();
         	}
         	catch (Exception e)
         	{
+                log.error("Could not create a WmsGetCapabilitiesProcessor.");
         		throw new IOException(msgPart1 + "WmsGetCapabilitiesProcessor" + msgPart2);
         	}
         }
@@ -142,10 +154,12 @@ public class OgcWmsRequestProcessorFactory
         	try
 			{
 				processor = Class.forName(processors.getProperty("WmsGetMapProcessor"));
+                log.debug("Exiting createProcessor(String).  Returning WmsGetMapProcessor.");
 				return (IOgcRequestProcessor)processor.newInstance();
 			}
 			catch (Exception e)
 			{
+                log.error("Could not create a WmsGetMapProcessor.");
 				throw new IOException(msgPart1 + "WmsGetMapProcessor" + msgPart2);
 			}
     	}
@@ -155,10 +169,12 @@ public class OgcWmsRequestProcessorFactory
         	try
 	    	{
 	    		processor = Class.forName(processors.getProperty("WmsGetFeatureInfoProcessor"));
+                log.debug("Exiting createProcessor(String).  Returning WmsGetFeatureInfoProcessor.");
 	    		return (IOgcRequestProcessor)processor.newInstance();
 	    	}
 	    	catch (Exception e)
 	    	{
+                log.error("Could not create a WmsGetFeatureInfoProcessor.");
 	    		throw new IOException(msgPart1 + "WmsGetFeatureInfoProcessor" + msgPart2);
 	    	}
     	}
@@ -168,14 +184,18 @@ public class OgcWmsRequestProcessorFactory
         	try
 	    	{
 	    		processor = Class.forName(processors.getProperty("WmsDescribeLayerProcessor"));
+                log.debug("Exiting createProcessor(String).  Returning WmsDescribeLayerProcessor.");
 	    		return (IOgcRequestProcessor)processor.newInstance();
 	    	}
 	    	catch (Exception e)
 	    	{
+                log.error("Could not create a WmsDescribeLayerProcessor.");
 	    		throw new IOException(msgPart1 + "WmsDescribeLayerProcessor" + msgPart2);
 	    	}
         }
         
+        log.error("Could not create an IOgcRequestProcessor from the specified REQUEST parameter.");
+        log.debug("Exiting createProcessor(String).");
         throw new IOException("No wms request processor object could be created from the request parameter '" + requestParameter + "'");
     }
 }

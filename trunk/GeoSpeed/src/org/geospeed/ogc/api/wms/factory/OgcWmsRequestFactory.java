@@ -2,6 +2,7 @@ package org.geospeed.ogc.api.wms.factory;
 
 import java.io.IOException;
 
+import org.apache.log4j.Logger;
 import org.geospeed.ogc.api.IOgcMap;
 import org.geospeed.ogc.api.IOgcRequest;
 import org.geospeed.ogc.impl.wms.request.OgcWmsDescribeLayerRequest;
@@ -23,6 +24,8 @@ import org.geospeed.ogc.impl.wms.request.OgcWmsGetMapRequest;
  ********************************************************************************/
 public class OgcWmsRequestFactory 
 {
+    private static Logger log = Logger.getLogger(OgcWmsRequestFactory.class);
+    
     /**
      * Given a Map that contains a key of "REQUEST", create the appropriate
      * IOgcRequest to expose the attributes passed by the requestor.
@@ -36,23 +39,41 @@ public class OgcWmsRequestFactory
      */
 	public static IOgcRequest createWmsRequest(IOgcMap params) throws IOException
     {
+        log.debug("Entering createWmsRequest(IOgcMap).");
+        
         String requestParameter = (String)params.get("REQUEST");
             
         if (requestParameter == null || requestParameter.equals(""))
-            throw new IOException("The wms request parameter was null.");
+        {
+            log.error("The REQUEST parameter was null.");
+            throw new IOException("The REQUEST parameter was null.");
+        }
         
         if (requestParameter.equalsIgnoreCase("GetCapabilities"))
+        {
+            log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetCapabilitiesRequest");
             return new OgcWmsGetCapabilitiesRequest(params);
+        }
         
         if (requestParameter.equalsIgnoreCase("GetMap"))
+        {
+            log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetMapRequest.");
             return new OgcWmsGetMapRequest(params);
+        }
         
         if (requestParameter.equalsIgnoreCase("GetFeatureInfo"))
+        {
+            log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetFeatureInfoRequest.");
             return new OgcWmsGetFeatureInfoRequest(params);
+        }
         
         if (requestParameter.equalsIgnoreCase("DescribeLayer"))
+        {
+            log.debug("Exiting createWmsRequest.  Returning an OgcWmsDescribeLayerRequest.");
             return new OgcWmsDescribeLayerRequest(params);
+        }
         
-        throw new IOException("No wms request object could be created from the request parameter '" + requestParameter + "'");
+        log.error("No IOgcWmsRequest could be created from the specified parameters.");
+        throw new IOException("No IOgcWmsRequest object could be created from the REQUEST parameter '" + requestParameter + "'");
     }
 }
