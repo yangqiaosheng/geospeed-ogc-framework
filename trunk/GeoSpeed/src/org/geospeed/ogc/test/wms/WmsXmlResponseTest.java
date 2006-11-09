@@ -60,7 +60,7 @@ public class WmsXmlResponseTest extends TestCase
         cap.setFees("none");
         cap.setGetCapFormat(fiFormat);
         cap.setGetCapLocation("http://www.someurl.com");
-        cap.setGetDescribeLayerLocation("http://www.someurl.com");
+        cap.setDescribeLayerLocation("http://www.someurl.com");
         cap.setGetFeatureInfoLocation("http://www.someurl.com");
         List mapFormat = new ArrayList();
         mapFormat.add("image/png");

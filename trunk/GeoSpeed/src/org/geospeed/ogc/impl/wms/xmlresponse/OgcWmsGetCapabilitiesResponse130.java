@@ -6,6 +6,10 @@ import java.util.List;
 
 import org.geospeed.ogc.api.IOgcXmlResponse;
 import org.geospeed.ogc.impl.OgcProperties;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.Namespace;
+import org.jdom.output.XMLOutputter;
 
 
 
@@ -35,7 +39,7 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
     private List featureInfoFormat = new ArrayList();
     private String getFeatureInfoLocation = null;
     private List describeLayerFormat = new ArrayList();
-    private String getDescribeLayerLocation = null;
+    private String describeLayerLocation = null;
     private List exceptionFormat = new ArrayList();
     private String supportSLD = null;
     private String userLayer = null;
@@ -43,7 +47,13 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
     private String remoteWfs = null;
     private List layers = new ArrayList();
     
+    private boolean useGetCapabilitiesPost;
+    private boolean useGetMapPost;
+    private boolean useGetFeatureInfoPost;
+    private boolean useDescribeLayerPost;
+    
     private OgcProperties props = null;
+    private Document xmlDoc = null;
     private String xml = null;
     
     public OgcWmsGetCapabilitiesResponse130()
@@ -55,6 +65,7 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
     {
         props = properties;
         fillProps();
+        createXmlDoc();
     }
     
     public String getAccessConstraints()
@@ -217,14 +228,14 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
         this.getCapLocation = getCapLocation;
     }
 
-    public String getGetDescribeLayerLocation()
+    public String getDescribeLayerLocation()
     {
-        return getDescribeLayerLocation;
+        return describeLayerLocation;
     }
 
-    public void setGetDescribeLayerLocation(String getDescribeLayerLocation)
+    public void setDescribeLayerLocation(String getDescribeLayerLocation)
     {
-        this.getDescribeLayerLocation = getDescribeLayerLocation;
+        this.describeLayerLocation = getDescribeLayerLocation;
     }
 
     public String getGetFeatureInfoLocation()
@@ -367,70 +378,55 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
         this.onlineResource = onlineResource;
     }
 
+    public boolean getUseGetCapabilitiesPost()
+    {
+        return useGetCapabilitiesPost;
+    }
+    
+    public void setUseGetCapabilitiesPost(boolean usePost)
+    {
+        useGetCapabilitiesPost = usePost;
+    }
+    
+    public boolean getUseGetMapPost()
+    {
+        return useGetMapPost;
+    }
+    
+    public void setUseMapPost(boolean usePost)
+    {
+        useGetMapPost = usePost;
+    }
+    
+    public boolean getUseGetFeatureInfoPost()
+    {
+        return useGetFeatureInfoPost;
+    }
+    
+    public void setUseFeatureInfoPost(boolean usePost)
+    {
+        useGetFeatureInfoPost = usePost;
+    }
+    
+    public boolean getUseDescribeLayerPost()
+    {
+        return useDescribeLayerPost;
+    }
+    
+    public void setUseDescrbeLayerPost(boolean usePost)
+    {
+        useDescribeLayerPost = usePost;
+    }
+    
     public String getXml()
     {
-        xml = new String();
+        xml = "";
         
-        xml = "<?xml version='1.0' encoding='UTF-8'?> " +
-        "<WMS_Capabilities version='1.3.0' xmlns='http://www.opengis.net/wms'>" +
-        "<Service><Name>WMS</Name><Title>" + serviceTitle + "</Title>" +
-        "<OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + onlineResource + "'/>" +
-        "<ContactInformation><ContactPersonPrimary><ContactPerson>" + contactPerson + "</ContactPerson>" +
-        "<ContactOrganization>" + contactOrg + "</ContactOrganization></ContactPersonPrimary>" +
-        "<ContactPosition>" + contactPos + "</ContactPosition>" +
-        "<ContactAddress><AddressType>" + contactAddrType + "</AddressType><Address>" + contactAddr + "</Address>" +
-        "<City>" + contactCity + "</City><StateOrProvince>" + contactState + "</StateOrProvince>" +
-        "<PostCode>" + contactPostCode + "</PostCode>" +
-        "<Country>" + contactCountry + "</Country></ContactAddress>" +
-        "<ContactVoiceTelephone>" + contactPhone + "</ContactVoiceTelephone>" +
-        "<ContactFacsimileTelephone>" + contactFax + "</ContactFacsimileTelephone>" +
-        "<ContactElectronicMailAddress>" + contactEmail + "</ContactElectronicMailAddress></ContactInformation>" +
-        "<Fees>" + fees + "</Fees><AccessConstraints>" + accessConstraints + "</AccessConstraints></Service>" +
-        "<Capability><Request><GetCapabilities>";
-        
-        for (Iterator i = getCapFormat.iterator(); i.hasNext();)
-            xml = xml + "<Format>" + (String)i.next() + "</Format>";
-        
-        xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getCapLocation + "'/></Get>" +
-        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getCapLocation + "'/></Post></HTTP></DCPType></GetCapabilities>" +
-        "<GetMap>";
-        
-        for (Iterator i = getMapFormat.iterator(); i.hasNext();)
-            xml = xml + "<Format>" + (String)i.next() + "</Format>";
-        
-        xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getMapLocation + "'/></Get>" +
-        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getMapLocation + "'/></Post></HTTP></DCPType></GetMap>" +
-        "<GetFeatureInfo>";
-        
-        for (Iterator i = featureInfoFormat.iterator(); i.hasNext();)
-            xml = xml + "<Format>" + (String)i.next() + "</Format>";
-        
-        xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getFeatureInfoLocation + "'/></Get>" +
-        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getFeatureInfoLocation + "'/></Post></HTTP></DCPType></GetFeatureInfo>" +
-        "<DescribeLayer>";
-        
-        for (Iterator i = describeLayerFormat.iterator(); i.hasNext();)
-            xml = xml + "<Format>" + (String)i.next() + "</Format>";
-
-        xml = xml + "<DCPType><HTTP><Get><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getDescribeLayerLocation + "'/></Get>" +
-        "<Post><OnlineResource xmlns:xlink='http://www.w3.org/1999/xlink' xlink:type='simple' xlink:href='" + getDescribeLayerLocation + "'/></Post></HTTP></DCPType></DescribeLayer></Request>" +
-        "<Exception>";
-        
-        for (Iterator i = getExceptionFormat().iterator(); i.hasNext();)
-            xml = xml + "<Format>" + (String)i.next() + "</Format>";
-        
-        xml = xml + "</Exception>" +
-        "<UserDefinedSymbolization SupportSLD='" + supportSLD + "'" +
-                " UserLayer='" + userLayer + "' UserStyle='" + userStyle + "' RemoteWFS='" + remoteWfs +"'/>"; 
-        
-        for (Iterator i = layers.iterator(); i.hasNext();)
-        {
-            OgcWmsGetCapabilitiesLayer130 l = (OgcWmsGetCapabilitiesLayer130)i.next();
-            xml = xml + l.getXml();
-        }
-        
-        xml = xml + "</Capability></WMS_Capabilities>";
-        
+        createXmlDoc();
+       
+        XMLOutputter xmlOut = new XMLOutputter();
+        xml = xmlOut.outputString(xmlDoc);
+            
         return xml;
     }
 
@@ -484,7 +480,7 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
         for (int i = 0; i < tmp.length; i++)
             describeLayerFormat.add(tmp[i]);
         
-        getDescribeLayerLocation = props.getProperty("WmsDescribeLayerLocation");
+        describeLayerLocation = props.getProperty("WmsDescribeLayerLocation");
         String exFormat = props.getProperty("ExceptionFormat");
         
         exceptionFormat = new ArrayList();
@@ -499,5 +495,273 @@ public class OgcWmsGetCapabilitiesResponse130 implements IOgcXmlResponse
         remoteWfs = props.getProperty("ReoteWFS");
 
     }
+
+    private void createXmlDoc()
+    {
+        xmlDoc = new Document();
+        try
+        {
+            Element root = new Element("WMS_Capabilities");
+            root.setAttribute("version", "1.3.0");
+            root.setNamespace(Namespace.getNamespace("http://www.opengis.net/wms"));
+            xmlDoc.setRootElement(root);
+            
+            root.addContent(createServiceTag());
+            
+            root.addContent(createCapabilityTag());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
     
+    private Element createServiceTag()
+    {
+        Element service = new Element("Service");
+        
+        Element name = new Element("Name");
+        name.setText(serviceName);
+        Element title = new Element("Title");
+        title.setText(serviceTitle);
+        
+        service.addContent(name);
+        service.addContent(title);
+        service.addContent(createOnlineResourceTag(onlineResource));
+        
+        service.addContent(createContactInfoTag());
+
+        Element feesTag = new Element("Fees");
+        feesTag.setText(fees);
+        Element accessConstraintsTag = new Element("AccessConstraints");
+        accessConstraintsTag.setText(accessConstraints);
+        
+        service.addContent(feesTag);
+        service.addContent(accessConstraintsTag);
+        
+        return service;
+    }
+
+    private Element createCapabilityTag()
+    {
+        Element capability = new Element("Capability");
+        
+        capability.addContent(createRequestTag());
+        capability.addContent(createExceptionTag());
+        capability.addContent(createUserDefinedSymblizationTag());
+        capability.addContent(createLayerTag());
+        
+        return capability;
+    }
+    
+    private Element createContactInfoTag()
+    {
+        Element contactInformation = new Element("ContactInformation");
+        
+        Element contactPersonPrimary = new Element("ContactPersonPrimary");
+        Element contactPersonTag = new Element("ContactPerson");
+        contactPersonTag.setText(contactPerson);
+        Element contactOrgTag = new Element("ContactOrganization");
+        contactOrgTag.setText(contactOrg);
+        
+        contactPersonPrimary.addContent(contactPersonTag);
+        contactPersonPrimary.addContent(contactOrgTag);
+
+        contactInformation.addContent(contactPersonPrimary);
+        
+        Element contactPosition = new Element("ContactPosition");
+        contactPosition.setText(contactPos);
+        
+        contactInformation.addContent(contactPosition);
+        
+        Element contactAddress = new Element("ContactAddress");
+        Element addressType = new Element("AddressType");
+        addressType.setText(contactAddrType);
+        Element address = new Element("Address");
+        address.setText(contactAddr);
+        Element city = new Element("City");
+        city.setText(contactCity);
+        Element state = new Element("StateOrProvince");
+        state.setText(contactState);
+        Element postCode = new Element("PostCode");
+        postCode.setText(contactPostCode);
+        Element country = new Element("Country");
+        country.setText(contactCountry);
+        
+        contactAddress.addContent(addressType);
+        contactAddress.addContent(address);
+        contactAddress.addContent(city);
+        contactAddress.addContent(state);
+        contactAddress.addContent(postCode);
+        contactAddress.addContent(country);
+        
+        contactInformation.addContent(contactAddress);
+        
+        Element contactPhoneTag = new Element("ContactVoiceTelephone");
+        contactPhoneTag.setText(contactPhone);
+        Element contactFaxTag = new Element("ContactFacsimileTelephone");
+        contactFaxTag.setText(contactFax);
+        Element contactEmailTag = new Element("ContactElectronicMailAddress");
+        contactEmailTag.setText(contactEmail);
+        
+        contactInformation.addContent(contactPhoneTag);
+        contactInformation.addContent(contactFaxTag);
+        contactInformation.addContent(contactEmailTag);
+        
+        return contactInformation;
+    }
+
+    private Element createRequestTag()
+    {
+        Element request = new Element("Request");
+        request.addContent(createGetCapabilitiesTag());
+        request.addContent(createGetMapTag());
+        request.addContent(createGetFeatureInfoTag());
+        request.addContent(createDescribeLayerTag());
+        
+        return request;
+    }
+    
+    private Element createGetCapabilitiesTag()
+    {
+        Element getCap = new Element("GetCapabilities");
+        
+        List formatList = new ArrayList();
+        for (Iterator i = getCapFormat.iterator(); i.hasNext();)
+        {
+            Element format = new Element("Format");
+            format.setText((String)i.next());
+            formatList.add(format);
+        }
+        getCap.addContent(formatList);
+        
+        getCap.addContent(createDCPTypeTag(getCapLocation, useGetCapabilitiesPost));
+   
+        return getCap;
+    }
+    
+    private Element createGetMapTag()
+    {
+        Element getMap = new Element("GetMap");
+        
+        List formatList = new ArrayList();
+        for (Iterator i = getMapFormat.iterator(); i.hasNext();)
+        {
+            Element format = new Element("Format");
+            format.setText((String)i.next());
+            formatList.add(format);
+        }
+        getMap.addContent(formatList);
+        
+        getMap.addContent(createDCPTypeTag(getMapLocation, useGetMapPost));
+        
+        return getMap;
+    }
+    
+    private Element createGetFeatureInfoTag()
+    {
+        Element getFI = new Element("FeatureInfo");
+        
+        List formatList = new ArrayList();
+        for (Iterator i = getFeatureInfoFormat().iterator(); i.hasNext();)
+        {
+            Element format = new Element("Format");
+            format.setText((String)i.next());
+            formatList.add(format);
+        }
+        getFI.addContent(formatList);
+        
+        getFI.addContent(createDCPTypeTag(getFeatureInfoLocation, useGetFeatureInfoPost));
+        
+        return getFI;
+    }
+    
+    private Element createDescribeLayerTag()
+    {
+        Element dl = new Element("DescribeLayer");
+        
+        List formatList = new ArrayList();
+        for (Iterator i = describeLayerFormat.iterator(); i.hasNext();)
+        {
+            Element format = new Element("Format");
+            format.setText((String)i.next());
+            formatList.add(format);
+        }
+        dl.addContent(formatList);
+        
+        dl.addContent(createDCPTypeTag(describeLayerLocation, useDescribeLayerPost));
+        
+        return dl;
+    }
+    
+    private Element createDCPTypeTag(String url, boolean usePost)
+    {
+        Element dcpType = new Element("DCPType");
+        Element http = new Element("HTTP");
+        Element get = new Element("Get");
+        get.addContent(createOnlineResourceTag(url));
+        Element post = new Element("Post");
+        post.addContent(createOnlineResourceTag(url));
+        
+        http.addContent(get);
+        if (usePost)
+            http.addContent(post);
+        
+        dcpType.addContent(http);
+        
+        return dcpType;        
+    }
+    
+    private Element createOnlineResourceTag(String url)
+    {
+        Element onlineResourceTag = new Element("OnlineResource");
+        onlineResourceTag.setAttribute("xlink", "http://www.w3.org/1999/xlink", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+        onlineResourceTag.setAttribute("type", "simple", Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+        onlineResourceTag.setAttribute("href", url, Namespace.getNamespace("xlink", "http://www.w3.org/1999/xlink"));
+        
+        return onlineResourceTag;
+    }
+    
+    private Element createExceptionTag()
+    {
+        Element exception = new Element("Exception");
+        
+        List formatList = new ArrayList();
+        for (Iterator i = exceptionFormat.iterator(); i.hasNext();)
+        {
+            Element format = new Element("Format");
+            format.setText((String)i.next());
+            formatList.add(format);
+        }
+        exception.addContent(formatList);
+        
+        return exception;
+    }
+
+    private Element createUserDefinedSymblizationTag()
+    {
+        Element u = new Element("UserDefinedSymbolization"); 
+        u.setAttribute("SupportSLD", supportSLD);
+        u.setAttribute("UserLayer", userLayer);
+        u.setAttribute("UserStyle", userStyle);
+        u.setAttribute("RemoteWFS", remoteWfs);
+        
+        return u;               
+    }
+
+    private List createLayerTag()
+    {
+        List layerTags = new ArrayList();
+        
+        for (Iterator i = layers.iterator(); i.hasNext();)
+        {
+            OgcWmsGetCapabilitiesLayer130 layer = (OgcWmsGetCapabilitiesLayer130)i.next();
+            layerTags.add(layer.getTag());
+        }
+        
+        return layerTags;
+        
+    }
 }
+
+

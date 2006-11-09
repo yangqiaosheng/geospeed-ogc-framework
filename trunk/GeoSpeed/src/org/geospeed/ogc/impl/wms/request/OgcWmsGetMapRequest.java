@@ -1,6 +1,7 @@
 package org.geospeed.ogc.impl.wms.request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -19,10 +20,10 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
     private String sld;
     private String crs;
     //BBOX format is BBOX=minx,miny,maxx,maxy
-    private String minx = "0";
-    private String maxx = "0";
-    private String miny = "0";
-    private String maxy = "0";
+    private String minx = "0.0";
+    private String maxx = "0.0";
+    private String miny = "0.0";
+    private String maxy = "0.0";
     private String width;
     private String height;
     private String format;
@@ -31,7 +32,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
     private String exceptionFormat;
     private String elevation;
     private String time;
-    private Map vendorSpecificParams;
+    private Map vendorSpecificParams = new HashMap();
     
 	public OgcWmsGetMapRequest(IOgcMap params)
 	{
@@ -75,10 +76,10 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
             
             if (tmpBbox.length == 4)
             {
-                minx = tmpBbox[0];
-                miny = tmpBbox[1];
-                maxx = tmpBbox[2];
-                maxy = tmpBbox[3];
+                miny = tmpBbox[0];
+                minx = tmpBbox[1];
+                maxy = tmpBbox[2];
+                maxx = tmpBbox[3];
             }
         }
         
@@ -187,37 +188,37 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 
     public String toString()
     {
-        String s = "REQUEST: " + request;
-        s += "\nSERVICE: " + service;
-        s += "\nVERSION: " + version;
+        StringBuffer s = new StringBuffer("REQUEST: " + request);
+        s.append("\nSERVICE: " + service);
+        s.append("\nVERSION: " + version);
         
         for (Iterator i = layers.iterator(); i.hasNext();)
-            s += "\nLAYER: " + (String)i.next();
+            s.append("\nLAYER: " + (String)i.next());
         
         for (Iterator i = styles.iterator(); i.hasNext();)
-            s += "\nSTYLE: " + (String)i.next();
+            s.append("\nSTYLE: " + (String)i.next());
         
-        s += "\nSLD: " + sld;
-        s += "\nCRS: " + crs;
-        s += "\nMINX: " + minx;
-        s += "\nMAXX: " + maxx;
-        s += "\nMINY: " + miny;
-        s += "\nMAXY: " + maxy;
-        s += "\nWIDTH: " + width;
-        s += "\nHEIGHT: " + height;
-        s += "\nFORMAT: " + format;
-        s += "\nTRANSPARENT: " + transparent;
-        s += "\nBGCOLOR: " + bgColor;
-        s += "\nEXCEPTIONS: " + exceptionFormat;
-        s += "\nELEVATION: " + elevation;
-        s += "\nTIME: " + time;
+        s.append("\nSLD: " + sld);
+        s.append("\nCRS: " + crs);
+        s.append("\nMINX: " + minx);
+        s.append("\nMAXX: " + maxx);
+        s.append("\nMINY: " + miny);
+        s.append("\nMAXY: " + maxy);
+        s.append("\nWIDTH: " + width);
+        s.append("\nHEIGHT: " + height);
+        s.append("\nFORMAT: " + format);
+        s.append("\nTRANSPARENT: " + transparent);
+        s.append("\nBGCOLOR: " + bgColor);
+        s.append("\nEXCEPTIONS: " + exceptionFormat);
+        s.append("\nELEVATION: " + elevation);
+        s.append("\nTIME: " + time);
         
         for (Iterator i = vendorSpecificParams.keySet().iterator(); i.hasNext();)
         {
             String key = (String)i.next();
-            s += "\n" + key + ": " + vendorSpecificParams.get(key);
+            s.append("\n" + key + ": " + vendorSpecificParams.get(key));
         }
         
-        return s;
+        return s.toString();
     }
 }

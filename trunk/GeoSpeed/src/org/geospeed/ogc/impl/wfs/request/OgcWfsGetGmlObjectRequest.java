@@ -1,5 +1,6 @@
 package org.geospeed.ogc.impl.wfs.request;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.geospeed.ogc.api.IOgcMap;
@@ -14,7 +15,7 @@ public class OgcWfsGetGmlObjectRequest implements IOgcWfsGetGmlObjectRequest
     private String service;
     private String version;
     private String request = "";
-    private Map vendorSpecificParams;
+    private Map vendorSpecificParams = new HashMap();
     
     public OgcWfsGetGmlObjectRequest(IOgcMap params)
     {

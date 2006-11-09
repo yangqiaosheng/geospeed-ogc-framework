@@ -1,5 +1,6 @@
 package org.geospeed.ogc.impl.wcs.request;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.geospeed.ogc.api.IOgcMap;
@@ -13,7 +14,7 @@ public class OgcWcsGetCapabilitiesRequest implements IOgcWcsGetCapabilitiesReque
     private String request;
     private String section;
     private String updateSequence;
-    private Map vendorSpecificParams;
+    private Map vendorSpecificParams = new HashMap();
     
     public OgcWcsGetCapabilitiesRequest(IOgcMap params)
     {

@@ -1,5 +1,7 @@
 package org.geospeed.ogc.impl.wfs.request;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,15 +21,15 @@ public class OgcWfsGetFeatureRequest implements IOgcWfsGetFeatureRequest
     private String maxFeatures;
     private String expiry;
     private String srsName;
-    private List typenames;
-    private List featureIds;
-    private List filters;
+    private List typenames = new ArrayList();
+    private List featureIds = new ArrayList();
+    private List filters = new ArrayList();
     private String maxX = "0";
     private String maxY = "0";
     private String minX = "0";
     private String minY = "0";
     private String sortBy;
-    private Map vendorSpecificParams;
+    private Map vendorSpecificParams = new HashMap();
     
     public OgcWfsGetFeatureRequest(IOgcMap params)
     {

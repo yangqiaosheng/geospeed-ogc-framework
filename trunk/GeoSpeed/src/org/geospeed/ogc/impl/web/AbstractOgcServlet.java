@@ -37,7 +37,9 @@ public abstract class AbstractOgcServlet extends HttpServlet
         while (paramNames.hasMoreElements())
         {
             String param = (String)paramNames.nextElement();
-            params.put(param, httpReq.getParameter(param).toUpperCase());
+            String value = httpReq.getParameter(param).toUpperCase();
+            params.put(param, value);
+            System.out.println(param + ": " + value);
         }
         
         return params;

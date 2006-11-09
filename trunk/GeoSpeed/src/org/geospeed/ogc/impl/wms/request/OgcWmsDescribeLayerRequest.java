@@ -1,6 +1,7 @@
 package org.geospeed.ogc.impl.wms.request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -15,7 +16,7 @@ public class OgcWmsDescribeLayerRequest implements IOgcWmsDescribeLayerRequest
     private String request;
     private String service;
     private List layers = new ArrayList();
-	private Map vendorSpecificParams;
+	private Map vendorSpecificParams = new HashMap();
     
 	public OgcWmsDescribeLayerRequest(IOgcMap params)
 	{
@@ -63,19 +64,19 @@ public class OgcWmsDescribeLayerRequest implements IOgcWmsDescribeLayerRequest
 
     public String toString()
     {
-        String s = "REQUEST: " + request;
-        s += "\nSERVICE: " + service;
-        s += "\nVERSION: " + version;
+        StringBuffer s = new StringBuffer("REQUEST: " + request);
+        s.append("\nSERVICE: " + service);
+        s.append("\nVERSION: " + version);
         
         for (Iterator i = layers.iterator(); i.hasNext();)
-            s += "\nLAYER: " + (String)i.next();
+            s.append("\nLAYER: " + (String)i.next());
         
         for (Iterator i = vendorSpecificParams.keySet().iterator(); i.hasNext();)
         {
             String key = (String)i.next();
-            s += "\n" + key + ": " + vendorSpecificParams.get(key);
+            s.append("\n" + key + ": " + vendorSpecificParams.get(key));
         }
         
-        return s;           
+        return s.toString();           
     }
 }

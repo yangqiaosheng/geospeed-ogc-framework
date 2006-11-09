@@ -10,7 +10,7 @@
 	    <mkdir dir="classes" />
 		<mkdir dir="bin"/>
 	    <javac srcdir="src" destdir="classes" 
-	    	classpath="./lib/log4j-1.2.13.jar;./lib/j2ee.jar;./lib/junit.jar"
+	    	classpath="./lib/log4j-1.2.13.jar;./lib/j2ee.jar;./lib/junit.jar;./lib/jdom.jar"
 	    	debug="true" debuglevel="lines,vars,source"/>
 	 </target>
 
@@ -26,6 +26,7 @@
 		<war destfile="./bin/geospeed.war" webxml="./web/web.xml">
 			<lib file="./bin/geospeed.jar"/>
 			<lib file="./lib/log4j-1.2.13.jar"/>
+			<lib file="./lib.jdom.jar"/>
 			<classes file="./processors.properties"/>
 		</war>
 	</target>

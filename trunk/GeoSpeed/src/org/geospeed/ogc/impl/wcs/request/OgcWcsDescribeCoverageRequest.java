@@ -1,5 +1,7 @@
 package org.geospeed.ogc.impl.wcs.request;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,11 +11,11 @@ import org.geospeed.ogc.api.wcs.IOgcWcsDescribeCoverageRequest;
 
 public class OgcWcsDescribeCoverageRequest implements IOgcWcsDescribeCoverageRequest
 {
-    private List coverages;
+    private List coverages = new ArrayList();
     private String service;
     private String version;
     private String request;
-    private Map vendorSpecificParams;
+    private Map vendorSpecificParams = new HashMap();
 
     public OgcWcsDescribeCoverageRequest(IOgcMap params)
     {

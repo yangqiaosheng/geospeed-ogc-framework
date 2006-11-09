@@ -1,5 +1,7 @@
 package org.geospeed.ogc.impl.wfs.request;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -9,12 +11,12 @@ import org.geospeed.ogc.api.wfs.IOgcWfsDescribeFeatureTypeRequest;
 
 public class OgcWfsDescribeFeatureTypeRequest implements IOgcWfsDescribeFeatureTypeRequest
 {
-    private List typenames;
+    private List typenames = new ArrayList();
     private String outputFormat;
     private String service;
     private String version;
     private String request = "";
-    private Map vendorSpecificParams;
+    private Map vendorSpecificParams = new HashMap();
 
     public OgcWfsDescribeFeatureTypeRequest(IOgcMap params)
     {

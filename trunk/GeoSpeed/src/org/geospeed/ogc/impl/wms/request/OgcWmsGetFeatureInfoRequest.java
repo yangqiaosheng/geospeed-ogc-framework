@@ -1,6 +1,7 @@
 package org.geospeed.ogc.impl.wms.request;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +23,7 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
     private String i;
     private String j;
     private String exceptions;
-	private Map vendorSpecificParams;
+	private Map vendorSpecificParams = new HashMap();
     
 	public OgcWmsGetFeatureInfoRequest(IOgcMap params)
 	{
@@ -107,24 +108,24 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
 
     public String toString()
     {
-        String s = "REQUEST: " + request;
-        s += "\nSERVICE: " + service;
-        s += "\nVERSION: " + version;
-        s += "\nINFO_FORMAT: " + infoFormat;
-        s += "\nFEATURE_COUNT: " + featureCount;
-        s += "\nI: " + i;
-        s += "\nJ: " + j;
-        s += "\nEXCEPTIONS: " + exceptions;
+        StringBuffer s = new StringBuffer("REQUEST: " + request);
+        s.append("\nSERVICE: " + service);
+        s.append("\nVERSION: " + version);
+        s.append("\nINFO_FORMAT: " + infoFormat);
+        s.append("\nFEATURE_COUNT: " + featureCount);
+        s.append("\nI: " + i);
+        s.append("\nJ: " + j);
+        s.append("\nEXCEPTIONS: " + exceptions);
         
         for (Iterator i = queryLayers.iterator(); i.hasNext();)
-            s += "\nLAYER: " + (String)i.next();
+            s.append("\nLAYER: " + (String)i.next());
         
         for (Iterator i = vendorSpecificParams.keySet().iterator(); i.hasNext();)
         {
             String key = (String)i.next();
-            s += "\n" + key + ": " + vendorSpecificParams.get(key);
+            s.append("\n" + key + ": " + vendorSpecificParams.get(key));
         }
         
-        return s;
+        return s.toString();
     }
 }

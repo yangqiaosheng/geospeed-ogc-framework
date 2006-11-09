@@ -1,5 +1,7 @@
 package org.geospeed.ogc.impl.wcs.request;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,8 +18,8 @@ public class OgcWcsGetCoverageRequest implements IOgcWcsGetCoverageRequest
     private String maxY = "0";
     private String minX = "0";
     private String minY = "0";
-    private List time;
-    private List parameters;
+    private List time = new ArrayList();
+    private List parameters = new ArrayList();
     private String width = "0";
     private String height = "0";
     private String depth = "0";
@@ -30,7 +32,7 @@ public class OgcWcsGetCoverageRequest implements IOgcWcsGetCoverageRequest
     private String service;
     private String version;
     private String request;
-    private Map vendorSpecificParams;
+    private Map vendorSpecificParams = new HashMap();
     
     public OgcWcsGetCoverageRequest(IOgcMap params)
     {

@@ -22,25 +22,25 @@ public class OgcWmsDescribeLayerResponse implements IOgcXmlResponse
     
     public String getXml()
     {
-        String xml = "<WMS_DescribeLayerResponse version=\"1.1.0\" >";
+        StringBuffer xml = new StringBuffer("<WMS_DescribeLayerResponse version=\"1.1.0\" >");
         
         for (Iterator i = layers.iterator(); i.hasNext();)
         {
             OgcWmsDescribeLayerLayer layer = (OgcWmsDescribeLayerLayer)i.next();
             
-            xml = xml + "<LayerDescription name=\"" + layer.getLayerName() + "\" wfs=\"" + layer.getWfsUrl() + "\">";
+            xml.append("<LayerDescription name=\"" + layer.getLayerName() + "\" wfs=\"" + layer.getWfsUrl() + "\">");
             
             for (Iterator q = layer.getQuerys().iterator(); q.hasNext();)
             {
                 String query = (String)q.next();
                 
-                xml = xml + "<Query typeName=\"" + query + "\"/>";
+                xml.append("<Query typeName=\"" + query + "\"/>");
             }
             
-            xml = xml + "</LayerDescription>";
+            xml.append("</LayerDescription>");
         }
         
-        return xml;
+        return xml.toString();
     }
 
 }
