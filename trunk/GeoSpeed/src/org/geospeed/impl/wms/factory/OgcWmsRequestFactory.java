@@ -52,7 +52,8 @@ public class OgcWmsRequestFactory
             throw new IOException(msg.toString());
         }
         
-        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETCAPABILITIES.name()))
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETCAPABILITIES.name())
+                || requestParameter.equalsIgnoreCase(WebMappingServiceKey.CAPABILITIES.name()))
         {
             log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetCapabilitiesRequest");
             return new OgcWmsGetCapabilitiesRequest(params);
