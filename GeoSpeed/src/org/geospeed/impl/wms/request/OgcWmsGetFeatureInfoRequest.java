@@ -17,24 +17,30 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
     private IOgcWmsGetMapRequest mapRequest;
     private List<String> queryLayers = new ArrayList<String>();
     private String version;
+    private String wmtver;
     private String request;
     private String service;
     private String infoFormat;
     private String featureCount;
     private String i;
     private String j;
+    private String x;
+    private String y;
     private String exceptions;
 	private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
     
 	public OgcWmsGetFeatureInfoRequest(Map<String, String> params)
 	{
 		version = (String)params.remove(OgcRequestKey.VERSION.name());
+        wmtver = (String)params.remove(OgcRequestKey.WMTVER.name());
 		request = (String)params.remove(OgcRequestKey.REQUEST.name());
         service = (String)params.remove(OgcRequestKey.SERVICE.name());
 		infoFormat = (String)params.remove(WebMappingServiceKey.INFO_FORMAT.name());
 		featureCount = (String)params.remove(WebMappingServiceKey.FEATURE_COUNT.name());
 		i = (String)params.remove(WebMappingServiceKey.I.name());
 		j = (String)params.remove(WebMappingServiceKey.J.name());
+        x = (String)params.remove(WebMappingServiceKey.X.name());
+        y = (String)params.remove(WebMappingServiceKey.Y.name());
 		exceptions = (String)params.remove(WebMappingServiceKey.EXCEPTIONS.name());
         
 		String tmp = (String)params.remove(WebMappingServiceKey.QUERY_LAYERS.name());
@@ -74,14 +80,24 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
 
 	public String getI() 
 	{
-		return i;
+        return (i == null || i.equals("")) ? x : i;
 	}
 
 	public String getJ() 
 	{
-		return j;
+        return (j == null || j.equals("")) ? y : j;
 	}
 
+    public String getX()
+    {
+        return (x == null || x.equals("")) ? i : x;
+    }
+    
+    public String getY()
+    {
+        return (y == null || y.equals("")) ? j : y;
+    }
+    
 	public String getExceptions() 
 	{
 		return exceptions;
@@ -89,7 +105,7 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
 
 	public String getVersion() 
 	{
-		return version;
+        return (wmtver == null || wmtver.equals("")) ? version : wmtver;
 	}
 
 	public String getRequest() 
@@ -99,7 +115,7 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
 
     public String getService()
     {
-        return service;
+        return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
     }
 
     public Map getVendorSpecificParams()
