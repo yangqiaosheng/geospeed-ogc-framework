@@ -16,10 +16,15 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 	private List<String> layers = new ArrayList<String>();
     private List<String> styles = new ArrayList<String>();
     private String version;
+    private String wmtver;
     private String request;
     private String service;
     private String sld;
+    private String sldBody;
+    private String remoteOwsType;
+    private String remoteOwsUrl;
     private String crs;
+    private String srs;
     //BBOX format is BBOX=minx,miny,maxx,maxy
     private String minx = "0.0";
     private String maxx = "0.0";
@@ -38,10 +43,15 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 	public OgcWmsGetMapRequest(Map<String, String> params)
 	{
 		version = params.remove(OgcRequestKey.VERSION.name());
+        wmtver = params.remove(OgcRequestKey.WMTVER.name());
 		request = params.remove(OgcRequestKey.REQUEST.name());
         service = params.remove(OgcRequestKey.SERVICE.name());
 		sld = params.remove(WebMappingServiceKey.SLD.name());
+        sldBody = params.remove(WebMappingServiceKey.SLD_BODY.name());
+        remoteOwsType = params.remove(WebMappingServiceKey.REMOTE_OWS_TYPE.name());
+        remoteOwsUrl = params.remove(WebMappingServiceKey.REMOTE_OWS_URL.name());
 		crs = params.remove(WebMappingServiceKey.CRS.name());
+        srs = params.remove(WebMappingServiceKey.SRS.name());
 		width = params.remove(WebMappingServiceKey.WIDTH.name());
 		height = params.remove(WebMappingServiceKey.HEIGHT.name());
 		format = params.remove(WebMappingServiceKey.FORMAT.name());
@@ -77,10 +87,10 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
             
             if (tmpBbox.length == 4)
             {
-                miny = tmpBbox[0];
-                minx = tmpBbox[1];
-                maxy = tmpBbox[2];
-                maxx = tmpBbox[3];
+                minx = tmpBbox[0];
+                miny = tmpBbox[1];
+                maxx = tmpBbox[2];
+                maxy = tmpBbox[3];
             }
         }
         
@@ -91,12 +101,22 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 	{
 		return layers;
 	}
-
+ 
 	public String getSLD() 
 	{
-		return sld;
+		return (sld == null || sld.equals("")) ? sldBody : sld;
 	}
 
+    public String getRemoteOwsType()
+    {
+        return remoteOwsType;
+    }
+    
+    public String getRemoteOwsUrl()
+    {
+        return remoteOwsUrl;
+    }
+    
 	public List getStyles() 
 	{
 		return styles;
@@ -104,9 +124,14 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 
 	public String getCRS() 
 	{
-		return crs;
+        return (crs == null || crs.equals("")) ? srs : crs;
 	}
 
+    public String getSRS()
+    {
+        return (srs == null || srs.equals("")) ? crs : srs;
+    }
+    
 	public double getMinX() 
 	{
 		return Double.parseDouble(minx);
@@ -169,7 +194,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 
 	public String getVersion() 
 	{
-		return version;
+        return (wmtver == null || wmtver.equals("")) ? version : wmtver;
 	}
 
 	public String getRequest() 
@@ -179,7 +204,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 
     public String getService()
     {
-        return service;
+        return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
     }
 
     public Map getVendorSpecificParams()

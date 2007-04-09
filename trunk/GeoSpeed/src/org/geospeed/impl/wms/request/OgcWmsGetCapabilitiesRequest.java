@@ -13,6 +13,7 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
 {
 	private String service;
 	private String version;
+    private String wmtver;
 	private String request;
     private String updateSequence;
     private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
@@ -20,6 +21,7 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
 	public OgcWmsGetCapabilitiesRequest(Map<String, String> params)
 	{
 		service = params.remove(OgcRequestKey.SERVICE.name());
+        wmtver = params.remove(OgcRequestKey.WMTVER.name());
 		version = params.remove(OgcRequestKey.VERSION.name());
 		request = params.remove(OgcRequestKey.REQUEST.name());
         updateSequence = params.remove(WebMappingServiceKey.UPDATESEQUENCE.name());
@@ -29,12 +31,12 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
 	
 	public String getService() 
 	{
-		return service;
+		return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
 	}
 
 	public String getVersion() 
 	{
-		return version;
+		return (wmtver == null || wmtver.equals("")) ? version : wmtver;
 	}
 
 	public String getRequest() 

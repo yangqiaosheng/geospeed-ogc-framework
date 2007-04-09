@@ -34,7 +34,6 @@ public class WmsRequestFactoryTest extends TestCase
 
         IOgcWmsGetCapabilitiesRequest wmsRequest = (IOgcWmsGetCapabilitiesRequest)OgcWmsRequestFactory.createWmsRequest(params);
    
-        assertEquals(wmsRequest.getClass().toString(), "class com.fgm.jp.ogc.impl.wms.request.OgcWmsGetCapabilitiesRequest");
         assertEquals(wmsRequest.getRequest(), WebMappingServiceKey.GETCAPABILITIES.name());
         assertEquals(wmsRequest.getVersion(), "1.3.0");
         assertEquals(wmsRequest.getService(), "WMS");
@@ -62,7 +61,7 @@ public class WmsRequestFactoryTest extends TestCase
         params.put("TIME", "2006-02-10");
         
         IOgcWmsGetMapRequest wmsRequest = (IOgcWmsGetMapRequest)OgcWmsRequestFactory.createWmsRequest(params);
-        assertEquals(wmsRequest.getClass().toString(), "class com.fgm.jp.ogc.impl.wms.request.OgcWmsGetMapRequest");
+        
         assertEquals(wmsRequest.getRequest(), WebMappingServiceKey.GETMAP.name());
         assertEquals(wmsRequest.getVersion(), "1.3.0");
         assertTrue(wmsRequest.getLayers().size() == 4);
