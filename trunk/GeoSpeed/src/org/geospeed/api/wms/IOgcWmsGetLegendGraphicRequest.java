@@ -1,6 +1,5 @@
 package org.geospeed.api.wms;
 
-import org.geospeed.api.IOgcRequest;
 
 public interface IOgcWmsGetLegendGraphicRequest extends IOgcWmsRequest
 {
@@ -12,7 +11,7 @@ public interface IOgcWmsGetLegendGraphicRequest extends IOgcWmsRequest
     
     public String getRule();
     
-    public String getScale();
+    public double getScale();
     
     public String getSld();
     

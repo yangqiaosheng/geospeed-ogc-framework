@@ -42,6 +42,15 @@ public class WebMappingServiceKey extends Key
     public static final WebMappingServiceKey QUERY_LAYERS = new WebMappingServiceKey("QUERY_LAYERS");
     //for the DescribeLayer request
     public static final WebMappingServiceKey LAYER = new WebMappingServiceKey("LAYER");
+    //for the GetLegendGraphic request
+    public static final WebMappingServiceKey STYLE = new WebMappingServiceKey("STYLE");
+    public static final WebMappingServiceKey RULE = new WebMappingServiceKey("RULE");
+    public static final WebMappingServiceKey FEATURETYPE = new WebMappingServiceKey("FEATURETYPE");
+    public static final WebMappingServiceKey SCALE = new WebMappingServiceKey("SCALE");
+    //for the GetStyles request
+    public static final WebMappingServiceKey SLDVER = new WebMappingServiceKey("SLDVER");
+    //for the PutStyles request
+    public static final WebMappingServiceKey MODE = new WebMappingServiceKey("MODE");
     
     
     private WebMappingServiceKey(String _name)

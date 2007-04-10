@@ -32,6 +32,6 @@ public interface IOgcRequest
      */
     public String getService();
     
-    public Map getVendorSpecificParams();    
+    public Map<String, String> getVendorSpecificParams();    
 
 }

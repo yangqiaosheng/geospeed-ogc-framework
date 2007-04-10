@@ -16,5 +16,5 @@ public interface IOgcWmsDescribeLayerRequest extends IOgcWmsRequest
 	/**
 	 * @return List - The list of layers passed by the requestor. 
 	 */
-	public List getLayers();
+	public List<String> getLayers();
 }

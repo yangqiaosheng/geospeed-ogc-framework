@@ -17,7 +17,7 @@ public class OgcWmsDescribeLayerRequest implements IOgcWmsDescribeLayerRequest
     private String request;
     private String service;
     private List<String> layers = new ArrayList<String>();
-	private Map vendorSpecificParams = new HashMap();
+	private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
     
 	public OgcWmsDescribeLayerRequest(Map<String, String> params)
 	{
@@ -38,7 +38,7 @@ public class OgcWmsDescribeLayerRequest implements IOgcWmsDescribeLayerRequest
         vendorSpecificParams = params;
 	}
 	
-	public List getLayers() 
+	public List<String> getLayers() 
 	{
 		return layers;
 	}
@@ -58,7 +58,7 @@ public class OgcWmsDescribeLayerRequest implements IOgcWmsDescribeLayerRequest
         return service;
     }
     
-    public Map getVendorSpecificParams()
+    public Map<String, String> getVendorSpecificParams()
     {
         return vendorSpecificParams;
     }

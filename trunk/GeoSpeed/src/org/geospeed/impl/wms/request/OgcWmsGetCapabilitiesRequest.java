@@ -49,7 +49,7 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
 	    return updateSequence;
     }
 
-    public Map getVendorSpecificParams()
+    public Map<String, String> getVendorSpecificParams()
     {
         return vendorSpecificParams;
     }

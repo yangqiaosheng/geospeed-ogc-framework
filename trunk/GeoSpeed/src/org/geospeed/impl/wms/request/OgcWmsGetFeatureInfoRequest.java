@@ -63,7 +63,7 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
 		return mapRequest;
 	}
 
-	public List getQueryLayers() 
+	public List<String> getQueryLayers() 
 	{
 		return queryLayers;
 	}
@@ -118,7 +118,7 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
         return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
     }
 
-    public Map getVendorSpecificParams()
+    public Map<String, String> getVendorSpecificParams()
     {
         return vendorSpecificParams;
     }
