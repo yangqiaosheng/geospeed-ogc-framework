@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface IOgcWmsGetStylesRequest extends IOgcWmsRequest
 {
-    public List getLayers();
+    public List<String> getLayers();
     
     public String getSldVer();
     

@@ -21,7 +21,7 @@ public interface IOgcWmsGetFeatureInfoRequest extends IOgcWmsRequest
 	/**
 	 * @return List - the list of QUERY_LAYERS passed by the requestor.
 	 */
-	public List getQueryLayers();
+	public List<String> getQueryLayers();
 	
 	/**
 	 * @return String - the INFO_FORMAT passed by the requestor.

@@ -13,7 +13,7 @@ import java.util.List;
  ********************************************************************************/
 public interface IOgcWmsGetMapRequest extends IOgcWmsRequest 
 {
-public List getLayers();
+    public List<String> getLayers();
     
 	/**
 	 * @return String - The SLD_BODY passed by the requestor.
@@ -23,7 +23,7 @@ public List getLayers();
     /**
      * @return List - the STYLES passed by the requestor.
      */
-    public List getStyles();
+    public List<String> getStyles();
     
     /**
      * @return String - the CRS passed by the requestor.

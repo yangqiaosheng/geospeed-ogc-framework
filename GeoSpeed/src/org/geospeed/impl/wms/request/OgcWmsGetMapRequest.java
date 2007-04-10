@@ -97,7 +97,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
         vendorSpecificParams = params;
 	}
 	
-	public List getLayers() 
+	public List<String> getLayers() 
 	{
 		return layers;
 	}
@@ -117,7 +117,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
         return remoteOwsUrl;
     }
     
-	public List getStyles() 
+	public List<String> getStyles() 
 	{
 		return styles;
 	}
@@ -207,7 +207,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
         return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
     }
 
-    public Map getVendorSpecificParams()
+    public Map<String, String> getVendorSpecificParams()
     {
         return vendorSpecificParams;
     }
