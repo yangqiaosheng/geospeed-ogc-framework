@@ -8,7 +8,10 @@ import org.geospeed.api.IOgcRequest;
 import org.geospeed.impl.wms.request.OgcWmsDescribeLayerRequest;
 import org.geospeed.impl.wms.request.OgcWmsGetCapabilitiesRequest;
 import org.geospeed.impl.wms.request.OgcWmsGetFeatureInfoRequest;
+import org.geospeed.impl.wms.request.OgcWmsGetLegendGraphicRequest;
 import org.geospeed.impl.wms.request.OgcWmsGetMapRequest;
+import org.geospeed.impl.wms.request.OgcWmsGetStylesRequest;
+import org.geospeed.impl.wms.request.OgcWmsPutStylesRequest;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebMappingServiceKey;
 
@@ -75,6 +78,24 @@ public class OgcWmsRequestFactory
         {
             log.debug("Exiting createWmsRequest.  Returning an OgcWmsDescribeLayerRequest.");
             return new OgcWmsDescribeLayerRequest(params);
+        }
+        
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETLEGENDGRAPHIC.name()))
+        {
+            log.debug("Exiting createWmsREquest. Returning an OgcWmsGetLegendGraphicRequest.");
+            return new OgcWmsGetLegendGraphicRequest(params);
+        }
+        
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETSYTLES.name()))
+        {
+            log.debug("Exiting createWmsREquest. Returning an OgcWmsGetStylesRequest.");
+            return new OgcWmsGetStylesRequest(params);
+        }
+        
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.PUTSTYLES.name()))
+        {
+            log.debug("Exiting createWmsREquest. Returning an OgcWmsPutStylesRequest.");
+            return new OgcWmsPutStylesRequest(params);
         }
         
         log.error("No IOgcWmsRequest could be created from the specified parameters.");

@@ -12,6 +12,9 @@ public class WebMappingServiceKey extends Key
     public static final WebMappingServiceKey GETFEATUREINFO = new WebMappingServiceKey("GetFeatureInfo");
     public static final WebMappingServiceKey FEATUREINFO = new WebMappingServiceKey("feature_info");
     public static final WebMappingServiceKey DESCRIBELAYER = new WebMappingServiceKey("DescribeLayer");
+    public static final WebMappingServiceKey GETLEGENDGRAPHIC = new WebMappingServiceKey("GetLegendGraphic");
+    public static final WebMappingServiceKey GETSYTLES = new WebMappingServiceKey("GetStyles");
+    public static final WebMappingServiceKey PUTSTYLES = new WebMappingServiceKey("PutStyles");
     //for the GetCapabilities request
     public static final WebMappingServiceKey UPDATESEQUENCE = new WebMappingServiceKey("UPDATESEQUENCE");
     //For the GetMap request 

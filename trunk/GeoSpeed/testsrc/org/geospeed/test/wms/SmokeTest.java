@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.geospeed.api.IOgcResponse;
 import org.geospeed.impl.wms.OgcWebMappingService;
+import org.geospeed.keys.WebMappingServiceKey;
 
 
 public class SmokeTest 
@@ -13,14 +14,14 @@ public class SmokeTest
 	{
 		Map<String, String> params = new HashMap<String, String>();
 		
-		params.put("REQUEST", "GetCapabilities");
+		params.put("REQUEST", WebMappingServiceKey.GETCAPABILITIES.name());
 		
 		OgcWebMappingService wms = new OgcWebMappingService();
 		
 		IOgcResponse ogcRes = wms.executeRequest(params);
 		
-		if (!ogcRes.getResponseType().equals("GetCapabilities"))
-            System.out.println("!!!!!!! -- GetCapabilities (WMS) processor NOT FOUND!!!!!");
+		if (!ogcRes.getResponseType().equals(WebMappingServiceKey.GETCAPABILITIES.name()))
+            System.err.println("!!!!!!! -- GetCapabilities (WMS) processor NOT FOUND!!!!!");
 		else
 			System.out.println("GetCapabilities (WMS) processor found");
 	}
@@ -29,14 +30,14 @@ public class SmokeTest
 	{
 		Map<String, String> params = new HashMap<String, String>();
 		
-		params.put("REQUEST", "GetMap");
+		params.put("REQUEST", WebMappingServiceKey.GETMAP.name());
 		
 		OgcWebMappingService wms = new OgcWebMappingService();
 		
 		IOgcResponse ogcRes = wms.executeRequest(params);
 		
-		if (!ogcRes.getResponseType().equals("GetMap"))
-            System.out.println("!!!!!!! -- GetMap processor NOT FOUND!!!!!");
+		if (!ogcRes.getResponseType().equals(WebMappingServiceKey.GETMAP.name()))
+            System.err.println("!!!!!!! -- GetMap processor NOT FOUND!!!!!");
 		else
 			System.out.println("GetMap processor found");	
 	}
@@ -45,14 +46,14 @@ public class SmokeTest
 	{
 		Map<String, String> params = new HashMap<String, String>();
 		
-		params.put("REQUEST", "GetFeatureInfo");
+		params.put("REQUEST", WebMappingServiceKey.GETFEATUREINFO.name());
 		
 		OgcWebMappingService wms = new OgcWebMappingService();
 		
 		IOgcResponse ogcRes = wms.executeRequest(params);
 		
-		if (!ogcRes.getResponseType().equals("GetFeatureInfo"))
-            System.out.println("!!!!!!! -- GetFeatureInfo processor NOT FOUND!!!!!");
+		if (!ogcRes.getResponseType().equals(WebMappingServiceKey.GETFEATUREINFO.name()))
+            System.err.println("!!!!!!! -- GetFeatureInfo processor NOT FOUND!!!!!");
 		else
 			System.out.println("GetFeatureInfo processor found");	
 	}
@@ -61,18 +62,67 @@ public class SmokeTest
 	{
 	    Map<String, String> params = new HashMap<String, String>();
 		
-		params.put("REQUEST", "DescribeLayer");
+		params.put("REQUEST", WebMappingServiceKey.DESCRIBELAYER.name());
 		
 		OgcWebMappingService wms = new OgcWebMappingService();
 		
 		IOgcResponse ogcRes = wms.executeRequest(params);
 		
-		if (!ogcRes.getResponseType().equals("DescribeLayer"))
-            System.out.println("!!!!!!! -- DescribeLayer processor NOT FOUND!!!!!");
+		if (!ogcRes.getResponseType().equals(WebMappingServiceKey.DESCRIBELAYER.name()))
+            System.err.println("!!!!!!! -- DescribeLayer processor NOT FOUND!!!!!");
 		else
 			System.out.println("DescribeLayer processor found");
 	}
 	
+    public final void testWmsGetLegendGraphicRequest()
+    {
+        Map<String, String> params = new HashMap<String, String>();
+        
+        params.put("REQUEST", WebMappingServiceKey.GETLEGENDGRAPHIC.name());
+        
+        OgcWebMappingService wms = new OgcWebMappingService();
+        
+        IOgcResponse ogcRes = wms.executeRequest(params);
+        
+        if (!ogcRes.getResponseType().equals(WebMappingServiceKey.GETLEGENDGRAPHIC.name()))
+            System.err.println("!!!!!!! -- GetLegendGraphic processor NOT FOUND!!!!!");
+        else
+            System.out.println("getLegendGraphic processor found");
+        
+    }
+    
+    public final void testWmsGetStylesRequest()
+    {
+        Map<String, String> params = new HashMap<String, String>();
+        
+        params.put("REQUEST", WebMappingServiceKey.GETSYTLES.name());
+        
+        OgcWebMappingService wms = new OgcWebMappingService();
+        
+        IOgcResponse ogcRes = wms.executeRequest(params);
+        
+        if (!ogcRes.getResponseType().equals(WebMappingServiceKey.GETSYTLES.name()))
+            System.err.println("!!!!!!! -- GetStyles processor NOT FOUND!!!!!");
+        else
+            System.out.println("GetStyles processor found");
+    }
+    
+    public final void testWmsPutStylesRequest()
+    {
+        Map<String, String> params = new HashMap<String, String>();
+        
+        params.put("REQUEST", WebMappingServiceKey.PUTSTYLES.name());
+        
+        OgcWebMappingService wms = new OgcWebMappingService();
+        
+        IOgcResponse ogcRes = wms.executeRequest(params);
+        
+        if (!ogcRes.getResponseType().equals(WebMappingServiceKey.PUTSTYLES.name()))
+            System.err.println("!!!!!!! -- PutStyles processor NOT FOUND!!!!!");
+        else
+            System.out.println("PutStyles processor found");
+    }
+    
 	public static void main(String[] args)
 	{
 		SmokeTest test = new SmokeTest();
@@ -81,6 +131,9 @@ public class SmokeTest
 		test.testWmsGetMapRequest();
 		test.testWmsGetFeatureInfoRequest();
 		test.testWmsDescribeLayerRequest();
+        test.testWmsGetLegendGraphicRequest();
+        test.testWmsGetStylesRequest();
+        test.testWmsPutStylesRequest();
 	}
 
 }
