@@ -6,6 +6,8 @@ import java.util.Properties;
 
 import org.apache.log4j.Logger;
 import org.geospeed.api.IOgcRequestProcessor;
+import org.geospeed.keys.OgcProcessorsKey;
+import org.geospeed.keys.WebMappingServiceKey;
 
 
 /********************************************************************************
@@ -130,72 +132,67 @@ public class OgcWmsRequestProcessorFactory
 			me.loaded = true;
 		}
 		
-		Class processor;
+		
 		
         log.debug("Creating an IOgcRequestProcessor based on the REQUEST parameter '" + requestParameter + "'");
         
-        if (requestParameter.equalsIgnoreCase("GetCapabilities"))
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETCAPABILITIES.name())
+                || requestParameter.equalsIgnoreCase(WebMappingServiceKey.CAPABILITIES.name()))
         {
-        	try
-        	{
-        		processor = Class.forName(processors.getProperty("WmsGetCapabilitiesProcessor"));
-                log.debug("Exiting createProcessor(String).  Returning WmsGetCapabilitiesProcessor.");
-        		return (IOgcRequestProcessor)processor.newInstance();
-        	}
-        	catch (Exception e)
-        	{
-                log.error("Could not create a WmsGetCapabilitiesProcessor.");
-        		throw new IOException(msgPart1 + "WmsGetCapabilitiesProcessor" + msgPart2);
-        	}
+            return createProcessor(OgcProcessorsKey.WMSGETCAPABILITIES);        	
         }
         
-        if (requestParameter.equalsIgnoreCase("GetMap"))
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETMAP.name())
+                || requestParameter.equalsIgnoreCase(WebMappingServiceKey.MAP.name()))
         {
-        	try
-			{
-				processor = Class.forName(processors.getProperty("WmsGetMapProcessor"));
-                log.debug("Exiting createProcessor(String).  Returning WmsGetMapProcessor.");
-				return (IOgcRequestProcessor)processor.newInstance();
-			}
-			catch (Exception e)
-			{
-                log.error("Could not create a WmsGetMapProcessor.");
-				throw new IOException(msgPart1 + "WmsGetMapProcessor" + msgPart2);
-			}
+        	return createProcessor(OgcProcessorsKey.WMSGETMAP);
     	}
         
-        if (requestParameter.equalsIgnoreCase("GetFeatureInfo"))
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETFEATUREINFO.name())
+                || requestParameter.equalsIgnoreCase(WebMappingServiceKey.FEATUREINFO.name()))
         {	
-        	try
-	    	{
-	    		processor = Class.forName(processors.getProperty("WmsGetFeatureInfoProcessor"));
-                log.debug("Exiting createProcessor(String).  Returning WmsGetFeatureInfoProcessor.");
-	    		return (IOgcRequestProcessor)processor.newInstance();
-	    	}
-	    	catch (Exception e)
-	    	{
-                log.error("Could not create a WmsGetFeatureInfoProcessor.");
-	    		throw new IOException(msgPart1 + "WmsGetFeatureInfoProcessor" + msgPart2);
-	    	}
+        	return createProcessor(OgcProcessorsKey.WMSGETFEATUREINFO);
     	}
         
-        if (requestParameter.equalsIgnoreCase("DescribeLayer"))
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.DESCRIBELAYER.name()))
         {
-        	try
-	    	{
-	    		processor = Class.forName(processors.getProperty("WmsDescribeLayerProcessor"));
-                log.debug("Exiting createProcessor(String).  Returning WmsDescribeLayerProcessor.");
-	    		return (IOgcRequestProcessor)processor.newInstance();
-	    	}
-	    	catch (Exception e)
-	    	{
-                log.error("Could not create a WmsDescribeLayerProcessor.");
-	    		throw new IOException(msgPart1 + "WmsDescribeLayerProcessor" + msgPart2);
-	    	}
+        	return createProcessor(OgcProcessorsKey.WMSDESCRIBELAYER);
+        }
+        
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETLEGENDGRAPHIC.name()))
+        {
+            return createProcessor(OgcProcessorsKey.WMSGETLEGENDGRAPHIC);
+        }
+        
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETSYTLES.name()))
+        {
+            return createProcessor(OgcProcessorsKey.WMSGETSTYLES);
+        }
+        
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.PUTSTYLES.name()))
+        {
+            return createProcessor(OgcProcessorsKey.WMSPUTSTYLES);
         }
         
         log.error("Could not create an IOgcRequestProcessor from the specified REQUEST parameter.");
         log.debug("Exiting createProcessor(String).");
         throw new IOException("No wms request processor object could be created from the request parameter '" + requestParameter + "'");
+    }
+    
+    private IOgcRequestProcessor createProcessor(OgcProcessorsKey key) throws IOException
+    {
+        Class processor;
+        
+        try
+        {
+            processor = Class.forName(processors.getProperty(key.name()));
+            log.debug("Exiting createProcessor(String).  Returning " + key.name() + ".");
+            return (IOgcRequestProcessor)processor.newInstance();
+        }
+        catch (Exception e)
+        {
+            log.error("Could not create a " + key.name() + ".");
+            throw new IOException(msgPart1 + key.name() + msgPart2);
+        }
     }
 }
