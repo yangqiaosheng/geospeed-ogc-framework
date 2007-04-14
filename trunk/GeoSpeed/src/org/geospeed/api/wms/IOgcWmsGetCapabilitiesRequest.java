@@ -12,6 +12,11 @@ package org.geospeed.api.wms;
 public interface IOgcWmsGetCapabilitiesRequest extends IOgcWmsRequest 
 {
     /**
+     * @return String - Output format of service metadata.
+     */
+    public String getFormat();
+    
+    /**
      * @return String - The optional UPDATESEQUENCE parameter is for maintaining cache consistency.
      */
     public String getUpdateSequence();
