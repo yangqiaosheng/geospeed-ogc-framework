@@ -42,7 +42,7 @@ public class OgcWmsServlet extends AbstractOgcServlet
         
         //Check to make sure that the correct service is being called.  If not then 
         //the OgcWebMappingService class can't processes it and will blow up.
-        if (!service.equals(WebMappingServiceKey.SERVICE_NAME))
+        if (service != null && !service.equals(WebMappingServiceKey.SERVICE_NAME))
         {    
             String msg = "Incorrect service type!  Check the web.xml to ensure that the URL that" +
             " forwards to this service is correct and that the correct URL is being" +
