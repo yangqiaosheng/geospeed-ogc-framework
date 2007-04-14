@@ -62,13 +62,15 @@ public class OgcWmsRequestFactory
             return new OgcWmsGetCapabilitiesRequest(params);
         }
         
-        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETMAP.name()))
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETMAP.name())
+                ||requestParameter.equalsIgnoreCase(WebMappingServiceKey.MAP.name()))
         {
             log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetMapRequest.");
             return new OgcWmsGetMapRequest(params);
         }
         
-        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETFEATUREINFO.name()))
+        if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETFEATUREINFO.name())
+                || requestParameter.equalsIgnoreCase(WebMappingServiceKey.FEATUREINFO.name()))
         {
             log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetFeatureInfoRequest.");
             return new OgcWmsGetFeatureInfoRequest(params);
