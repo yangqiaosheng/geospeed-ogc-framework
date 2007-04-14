@@ -115,7 +115,8 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
 
     public String getService()
     {
-        return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
+        //return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
+        return service;
     }
 
     public Map<String, String> getVendorSpecificParams()
