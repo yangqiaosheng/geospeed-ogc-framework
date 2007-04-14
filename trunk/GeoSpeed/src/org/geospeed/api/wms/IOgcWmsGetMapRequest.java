@@ -21,6 +21,11 @@ public interface IOgcWmsGetMapRequest extends IOgcWmsRequest
     public String getSLD();
     
     /**
+     * @return String - The WFS passed by the requestor (version 1.1.0 and 1.1.1).
+     */
+    public String getWFS();
+    
+    /**
      * @return List - the STYLES passed by the requestor.
      */
     public List<String> getStyles();
