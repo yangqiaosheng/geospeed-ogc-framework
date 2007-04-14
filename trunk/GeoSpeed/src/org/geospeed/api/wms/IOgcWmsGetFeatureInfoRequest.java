@@ -43,6 +43,16 @@ public interface IOgcWmsGetFeatureInfoRequest extends IOgcWmsRequest
 	 */
 	public String getJ();
 	
+    /**
+     * @return String - The X passed by the requestor (version pre-1.3.0).
+     */
+    public String getX();
+    
+    /**
+     * @return String - The Y passed by the requestor (version pre-1.3.0).
+     */
+    public String getY();
+    
 	/**
 	 * @return String the EXCEPTIONS passed by the requestor.
 	 */
