@@ -20,6 +20,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
     private String request;
     private String service;
     private String sld;
+    private String wfs; //wfs_url in spec version 1.1.0
     private String sldBody;
     private String remoteOwsType;
     private String remoteOwsUrl;
@@ -47,6 +48,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 		request = params.remove(OgcRequestKey.REQUEST.name());
         service = params.remove(OgcRequestKey.SERVICE.name());
 		sld = params.remove(WebMappingServiceKey.SLD.name());
+        wfs = params.remove(WebMappingServiceKey.WFS.name());
         sldBody = params.remove(WebMappingServiceKey.SLD_BODY.name());
         remoteOwsType = params.remove(WebMappingServiceKey.REMOTE_OWS_TYPE.name());
         remoteOwsUrl = params.remove(WebMappingServiceKey.REMOTE_OWS_URL.name());
@@ -107,6 +109,11 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 		return (sld == null || sld.equals("")) ? sldBody : sld;
 	}
 
+    public String getWFS()
+    {
+        return wfs;
+    }
+    
     public String getRemoteOwsType()
     {
         return remoteOwsType;
