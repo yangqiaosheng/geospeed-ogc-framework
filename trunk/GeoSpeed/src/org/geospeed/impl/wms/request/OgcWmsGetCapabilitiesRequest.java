@@ -15,6 +15,7 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
 	private String version;
     private String wmtver;
 	private String request;
+    private String format;
     private String updateSequence;
     private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
 	
@@ -24,6 +25,7 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
         wmtver = params.remove(OgcRequestKey.WMTVER.name());
 		version = params.remove(OgcRequestKey.VERSION.name());
 		request = params.remove(OgcRequestKey.REQUEST.name());
+        format = params.remove(WebMappingServiceKey.FORMAT.name());
         updateSequence = params.remove(WebMappingServiceKey.UPDATESEQUENCE.name());
 
         vendorSpecificParams = params;
@@ -31,7 +33,10 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
 	
 	public String getService() 
 	{
-		return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
+        //the WMS 1.0 spec does not contain a service parameter.  So we should just return null for
+        //a WMS 1.0 request even though it may cause an issue with different service type requests.
+		//return (service == null || service.equals("")) ? WebMappingServiceKey.SERVICE_NAME.name() : service;
+        return service;
 	}
 
 	public String getVersion() 
@@ -44,6 +49,11 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
 		return request;
 	}
 
+    public String getFormat()
+    {
+        return format;
+    }
+    
 	public String getUpdateSequence()
     {
 	    return updateSequence;
