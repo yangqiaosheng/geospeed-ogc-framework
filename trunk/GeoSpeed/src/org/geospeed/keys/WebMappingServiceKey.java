@@ -19,6 +19,7 @@ public class WebMappingServiceKey extends Key
     public static final WebMappingServiceKey UPDATESEQUENCE = new WebMappingServiceKey("UPDATESEQUENCE");
     //For the GetMap request 
     public static final WebMappingServiceKey SLD = new WebMappingServiceKey("SLD");
+    public static final WebMappingServiceKey WFS = new WebMappingServiceKey("WFS");
     public static final WebMappingServiceKey SLD_BODY = new WebMappingServiceKey("SLD_BODY");
     public static final WebMappingServiceKey REMOTE_OWS_TYPE = new WebMappingServiceKey("REMOTE_OWS_TYPE");
     public static final WebMappingServiceKey REMOTE_OWS_URL = new WebMappingServiceKey("REMOTE_OWS_URL");
