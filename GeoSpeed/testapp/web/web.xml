@@ -1,0 +1,30 @@
+<web-app>
+	<servlet>
+		<servlet-name>WMS</servlet-name>
+		<servlet-class>org.geospeed.impl.wms.web.OgcWmsServlet</servlet-class>
+	</servlet>
+	<!--
+	<servlet>
+		<servlet-name>WFS</servlet-name>
+		<servlet-class>org.geospeed.ogc.impl.wfs.web.OgcWfsServlet</servlet-class>
+	</servlet>
+	<servlet>
+		<servlet-name>WCS</servlet-name>
+		<servlet-class>org.geospeed.ogc.impl.wcs.web.OgcWcsServlet</servlet-class>
+	</servlet>
+-->
+	<servlet-mapping>
+		<url-pattern>/wms</url-pattern>
+		<servlet-name>WMS</servlet-name>
+	</servlet-mapping>
+	<!-- 
+	<servlet-mapping>
+		<url-pattern>/wfs</url-pattern>
+		<servlet-name>WFS</servlet-name>
+	</servlet-mapping>
+	<servlet-mapping>
+		<url-pattern>/wcs</url-pattern>
+		<servlet-name>WCS</servlet-name>
+	</servlet-mapping>
+	-->
+</web-app>
