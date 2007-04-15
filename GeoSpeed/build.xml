@@ -1,6 +1,6 @@
 <project default="buildall">
   
-	<target name="buildall" depends="clean,compile,test,jar,war"/>
+	<target name="buildall" depends="clean,compile,test,jar"/>
 	
 	<target name="clean" description="Clean up output directories.">
 		<delete dir="classes" />
@@ -24,13 +24,5 @@
 	
 	<target name="jar" description="Create a jar file">
 		<jar destfile="./bin/geospeed.jar" basedir="./classes"/>
-	</target>
-	
-	<target name="war" description="Build a war file">
-		<war destfile="./bin/geospeed.war" webxml="./web/web.xml">
-			<lib file="./bin/geospeed.jar"/>
-			<lib file="./lib/log4j-1.2.13.jar"/>
-			<classes file="./processors.properties"/>
-		</war>
 	</target>
 </project>
