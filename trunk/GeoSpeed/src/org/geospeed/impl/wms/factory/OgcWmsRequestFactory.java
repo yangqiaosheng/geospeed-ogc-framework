@@ -50,7 +50,7 @@ public class OgcWmsRequestFactory
             
         if (requestParameter == null || requestParameter.equals(""))
         {
-            StringBuffer msg = new StringBuffer("The" + OgcRequestKey.REQUEST.name() + "parameter was null.");
+            StringBuffer msg = new StringBuffer("The " + OgcRequestKey.REQUEST.name() + " parameter was null.");
             log.error(msg.toString());
             throw new IOException(msg.toString());
         }
