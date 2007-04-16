@@ -5,6 +5,7 @@ public class WebMappingServiceKey extends Key
     //Service type
     public static final WebMappingServiceKey SERVICE_NAME = new WebMappingServiceKey("WMS");
     //versions
+    public static final WebMappingServiceKey V1_0 = new WebMappingServiceKey("1.0");
     public static final WebMappingServiceKey V1_0_0 = new WebMappingServiceKey("1.0.0");
     public static final WebMappingServiceKey V1_1_0 = new WebMappingServiceKey("1.1.0");
     public static final WebMappingServiceKey V1_1_1 = new WebMappingServiceKey("1.1.1");
