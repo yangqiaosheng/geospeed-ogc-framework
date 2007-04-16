@@ -3,7 +3,7 @@
 	<target name="buildall" depends="copyfiles,compile,jar,war"/>
 	
 	<target name="copyfiles" description="copy files from GeoSpeed base to the test app folders">
-		<copydir dest="./bin" src="../bin"></copydir>
+		<copydir dest="./lib" src="../bin"></copydir>
 		<copydir dest="./lib" src="../lib"></copydir>
 	</target>
 	
@@ -13,21 +13,28 @@
 			<exec executable="java">
 			    <arg value="-version"/>
 			</exec>
-		    <javac srcdir="src" destdir="classes" 
-		    	classpath="./lib/log4j-1.2.13.jar;./lib/j2ee.jar;./lib/junit.jar;"
+		    <javac srcdir="testappsrc" destdir="classes" 
+		    	classpath="./lib/geospeed.jar;./lib/log4j-1.2.13.jar;./lib/j2ee.jar;./lib/junit.jar;"
 		    	debug="true" debuglevel="lines,vars,source"/>
-		 </target>
+	</target>
 
-	
 	<target name="jar" description="Create a jar file">
 			<jar destfile="./bin/geospeed_testapp.jar" basedir="./classes"/>
 		</target>
 	
 	<target name="war" description="Build a war file">
-		<war destfile="./bin/geospeed.war" webxml="./web/web.xml">
-			<lib file="./bin/geospeed.jar"/>
+		<war destfile="./bin/geospeed_testapp.war" webxml="./web/web.xml">
+			<lib file="./bin/geospeed_testapp.jar"/>
+			<lib file="./lib/geospeed.jar"/>
 			<lib file="./lib/log4j-1.2.13.jar"/>
 			<classes file="./processors.properties"/>
+			<classes file="./data/wms_capabilities_1_0_0.xml"/>
+			<classes file="./data/wms_capabilities_1_1_0.xml"/>
+			<classes file="./data/wms_capabilities_1_1_1.xml"/>
+			<classes file="./data/wms_capabilities_1_3_0.xml"/>
+			<classes file="./data/wms.gif"/>
+			<classes file="./data/wms.jpg"/>
+			<classes file="./data/wms.png"/>
 		</war>
 	</target>
 </project>
