@@ -1,0 +1,151 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMT_MS_Capabilities version="1.1.0" updateSequence="0">
+<!-- Service Metadata -->
+<Service>
+  <!-- The WMT-defined name for this type of service -->
+  <Name>OGC:WMS</Name>
+  <!-- Human-readable title for pick lists -->
+  <Title>GeoSpeed Testapp server</Title>
+  <!-- Narrative description providing additional information -->
+  <Abstract>The GeoSpeed testapp WMS server.</Abstract>
+  <KeywordList>
+    <Keyword>GeoSpeed</Keyword>
+    <Keyword>test</Keyword>
+    <Keyword>wms</Keyword>
+  </KeywordList>
+  <!-- Top-level web address of service or service provider.  See also OnlineResource
+  elements under <DCPType>. -->
+  <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+	  xlink:href="http://localhost:8001/geospeed_testapp/" />
+  <!-- Contact information -->
+  <ContactInformation>
+    <ContactPersonPrimary>
+      <ContactPerson>Jeff deLaBeaujardiere</ContactPerson>
+      <ContactOrganization>NASA</ContactOrganization>
+    </ContactPersonPrimary>
+    <ContactPosition>Computer Scientist</ContactPosition>
+    <ContactAddress>
+      <AddressType>postal</AddressType>
+      <Address>NASA Goddard Space Flight Center, Code 933</Address>
+      <City>Greenbelt</City>
+      <StateOrProvince>MD</StateOrProvince>
+      <PostCode>20771</PostCode>
+      <Country>USA</Country>
+    </ContactAddress>
+    <ContactVoiceTelephone>+1 301 286-1569</ContactVoiceTelephone>
+    <ContactFacsimileTelephone>+1 301 286-1777</ContactFacsimileTelephone>
+    <ContactElectronicMailAddress>delabeau@iniki.gsfc.nasa.gov</ContactElectronicMailAddress>
+  </ContactInformation>
+  <!-- Fees or access constraints imposed. -->
+  <Fees>none</Fees>
+  <AccessConstraints>none</AccessConstraints>
+</Service>
+<Capability>
+  <Request>
+    <GetCapabilities>
+      <Format>application/vnd.ogc.wms_xml</Format>
+      <DCPType>
+        <HTTP>
+          <Get>
+            <!-- The URL here for invoking GetCapabilities using HTTP GET
+            is only a prefix to which a query string is appended. -->
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+             xlink:type="simple"
+	     xlink:href="http://localhost:8001/geospeed_testapp/wms" />
+          </Get>
+          <Post>
+            <!-- The URL here for invoking GetCapabilities using HTTP POST
+            includes the complete address to which a query would be sent in
+            XML format.  This is here for future expansion; no POST encoding
+	    has yet been defined. -->
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+             xlink:type="simple"
+	     xlink:href="http://localhost:8001/geospeed_testapp/wms" />
+          </Post>
+        </HTTP>
+      </DCPType>
+    </GetCapabilities>
+    <GetMap>
+      <Format>image/gif</Format>
+      <Format>image/png</Format>
+      <Format>image/jpeg</Format>
+      <DCPType>
+        <HTTP>
+          <Get>
+            <!-- The URL here for invoking GetCapabilities using HTTP GET
+            is only a prefix to which a query string is appended. -->
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+             xlink:type="simple"
+	     xlink:href="http://localhost:8001/geospeed_testapp/wms" />
+          </Get>
+        </HTTP>
+      </DCPType>
+    </GetMap>
+    <GetFeatureInfo>
+      <Format>application/vnd.ogc.gml</Format>
+      <Format>text/plain</Format>
+      <Format>text/html</Format>
+      <DCPType>
+        <HTTP>
+          <Get>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+             xlink:type="simple"
+	     xlink:href="http://localhost:8001/geospeed_testapp/wms" />
+          </Get>
+        </HTTP>
+      </DCPType>
+    </GetFeatureInfo>
+    <DescribeLayer><!--optional; used only by SLD-enabled WMS-->
+      <Format>application/vnd.ogc.gml</Format>
+      <DCPType>
+        <HTTP>
+          <Get>
+            <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
+             xlink:type="simple"
+	     xlink:href="http://localhost:8001/geospeed_testapp/wms" />
+          </Get>
+        </HTTP>
+      </DCPType>
+    </DescribeLayer>
+  </Request>
+  <Exception>
+    <Format>application/vnd.ogc.se_xml</Format>
+    <Format>application/vnd.ogc.se_inimage</Format>
+    <Format>application/vnd.ogc.se_blank</Format>
+  </Exception>
+  <!-- Any text or markup is allowed here, as required to describe
+       vendor-specific capabilities.  Please define elements and attributes
+       in the DOCTYPE declaration at the start of the document. -->
+  <!-- This example is empty because no VSPs were defined in preamble -->
+  <VendorSpecificCapabilities />
+  <!-- Place-holder for Styled Layer Descriptor (SLD)-enabled WMSes.
+       This element is absent for a basic WMS. -->
+  <UserDefinedSymbolization SupportSLD="1" UserLayer="1" UserStyle="1"
+	RemoteWFS="1" />
+  <Layer>
+    <Title>GeoSpeed Map Server</Title>
+    <SRS>EPSG:4326</SRS> <!-- all layers are available in at least this SRS -->
+    <AuthorityURL name="DIF_ID">
+      <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink" xlink:type="simple"
+	      xlink:href="http://localhost:8001/geospeed_testapp/" />
+    </AuthorityURL>
+    <Layer>
+      <!-- This parent layer has a Name and can therefore be requested from a Map Server, yielding a map of all subsidiary layers. -->
+      <Name>red_check</Name> 
+      <Title>Red Check!</Title>
+      <!-- See the spec to learn how some characteristics are inherited by
+           subsidiary layers. -->
+      <SRS>EPSG:4326</SRS> <!-- An additional SRS for this layer --> 
+      <LatLonBoundingBox minx="-180.0" miny="-90.0" maxx="180.0" maxy="90.0"/>
+      <!-- The optional resx and resy attributes below indicate the X and Y spatial
+           resolution in the units of that SRS. -->
+      <!-- The EPSG:4326 BoundingBox duplicates some of the info in LatLonBoundingBox
+           and is therefore optional, but using it here allows the additional
+           resolution attributes. -->
+      <BoundingBox SRS="EPSG:4326"
+       minx="-180.0" miny="-90.0" maxx="180.0" maxy="90.0" resx="0.0" resy="0.0"/>
+    </Layer>
+  </Layer>
+</Capability>
+</WMT_MS_Capabilities>
+
