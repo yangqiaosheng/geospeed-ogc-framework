@@ -35,6 +35,7 @@
 			<classes file="./data/wms.gif"/>
 			<classes file="./data/wms.jpg"/>
 			<classes file="./data/wms.png"/>
+			<classes file="./data/log4j.properties"/>
 		</war>
 	</target>
 </project>
