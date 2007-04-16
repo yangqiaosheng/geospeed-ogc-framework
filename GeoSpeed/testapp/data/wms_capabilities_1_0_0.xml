@@ -1,0 +1,76 @@
+<?xml version='1.0' encoding="UTF-8" standalone="no" ?>
+<WMT_MS_Capabilities version="1.0.0" updateSequence="0">
+<!-- Service Metadata -->
+<Service>
+  <!-- The WMT-defined name for this type of service -->
+  <Name>GetMap</Name>
+  <!-- Human-readable title for pick lists -->
+  <Title>GeoSpeed testapp OGC Server</Title>
+  <!-- Narrative description providing additional information -->
+  <Abstract>A test application for the GeoSpeed OGC application framework.</Abstract>
+  <Keywords>GeoSpeed wms ogc test</Keywords>
+  <!-- Top-level address of service or service provider.  See also onlineResource attributes of <DCPType> children. -->
+	  <OnlineResource>http://localhost:8001/</OnlineResource>
+  <!-- Fees or access constraints imposed. -->
+  <Fees>none</Fees>
+  <AccessConstraints>none</AccessConstraints>
+</Service>
+<Capability>
+  <Request>
+    <Map>
+      <Format>
+        <GIF />
+        <JPEG />
+        <PNG />
+      </Format>
+      <DCPType>
+        <HTTP>
+	  <!-- The URL here for HTTP GET requests includes only the prefix before the '?' and the query string.  Clients are expected to append '?WMTVER=nnn&etc' as described in the Web Map interface specification. -->
+	  <Get onlineResource="http://localhost:8001/geospeed_testapp/wms" />
+        </HTTP>
+      </DCPType>
+    </Map>
+    <Capabilities>
+      <Format>
+        <WMS_XML />
+      </Format>
+      <DCPType>
+        <HTTP>
+	  <!-- The URL here for HTTP GET requests includes only the prefix before the '?' and the query string.  Clients are expected to append '?WMTVER=nnn&etc' as described in the Web Map interface specification. -->
+	  <Get onlineResource="http://localhost:8001/geospeed_testapp/wms" />
+        </HTTP>
+      </DCPType>
+    </Capabilities>
+    <FeatureInfo>
+      <Format>
+        <MIME />
+        <GML.1 />
+      </Format>
+      <DCPType>
+        <HTTP>
+	  <!-- The URL here for HTTP GET requests includes only the prefix before the '?' and the query string.  Clients are expected to append '?WMTVER=nnn&etc' as described in the Web Map interface specification. -->
+	  <Get onlineResource="http://localhost:8001/geospeed_testapp/wms" />
+        </HTTP>
+      </DCPType>
+    </FeatureInfo>
+  </Request>
+  <Exception>
+    <Format>
+      <BLANK />
+      <WMS_XML />
+    </Format>
+  </Exception>
+  <Layer>
+    <Title>GeoSpeed WMS</Title>
+    <SRS>EPSG:4326</SRS> <!-- all layers are available in at least this SRS -->
+    <Layer queryable="0">
+      <Name>red_check</Name> 
+      <Title>Red Checkmark</Title>
+      <Abstract>A big red checkmark.</Abstract>
+      <Keywords>red checkmark</Keywords>
+      <LatLonBoundingBox minx="-180" miny="-90" maxx="180" maxy="90" />
+    </Layer>
+  </Layer>
+</Capability>
+</WMT_MS_Capabilities>
+
