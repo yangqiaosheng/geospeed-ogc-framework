@@ -3,7 +3,9 @@ package org.geospeed.impl.web;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
@@ -30,7 +32,7 @@ public abstract class AbstractOgcServlet extends HttpServlet
     
     /**
      * Gathers the list of request parameters into an IOgcMap.  The keys that
-     * access the IOgcMap are UPPERCASE Strings.
+     * access the entries in the IOgcMap are converte to UPPERCASE Strings.
      * 
      * @return an IOgcMap containing all of the parameters in the HttpRequest.
      */
@@ -56,7 +58,7 @@ public abstract class AbstractOgcServlet extends HttpServlet
     
     /**
      * Sends the contents of the IOgcResponse through the stream from the
-     * HttpServletResponse
+     * HttpServletResponse.
      * 
      * @param httpRes The HttpServletResponse created when this servlet was called.
      * @param ogcRes The IOgcResponse created by the IOgcService implementation.
@@ -69,6 +71,52 @@ public abstract class AbstractOgcServlet extends HttpServlet
         {
             httpRes.setContentType(ogcRes.getContentType());
             httpRes.setContentLength(ogcRes.getLength());
+            
+            Map<String, Long> dateHeader = ogcRes.getDateHeader();
+            
+            if (dateHeader.size() > 0)
+            {
+                Set<String> keys = dateHeader.keySet();
+                
+                for (String key : keys)
+                {
+                    Long value = dateHeader.get(key);
+                    
+                    httpRes.addDateHeader(key, value.longValue());
+                }
+            }
+
+            Map<String, String> header = ogcRes.getHeaders();
+            
+            if (header.size() > 0)
+            {
+                Set<String> keys = header.keySet();
+                
+                for (String key : keys)
+                {
+                    String value = header.get(key);
+                    
+                    httpRes.addHeader(key, value);
+                }
+            }
+            
+            Map<String, Integer> intHeader = ogcRes.getIntHeaders();
+            
+            if (intHeader.size() > 0)
+            {
+                Set<String> keys = intHeader.keySet();
+                
+                for (String key : keys)
+                {
+                    Integer value = intHeader.get(key);
+                    
+                    httpRes.addIntHeader(key, value.intValue());
+                }
+            }
+            
+            if (ogcRes.getStatus() != 0)
+                httpRes.setStatus(ogcRes.getStatus());
+            
             ServletOutputStream sos = httpRes.getOutputStream();
             log.debug("Sending response...");
             sos.write(ogcRes.getBytes());
@@ -85,6 +133,11 @@ public abstract class AbstractOgcServlet extends HttpServlet
         log.debug("Exiting sendResponse(HttpServletResponse, IOgcResponse).");
     }
 
+    /**
+     * Sends a plain text message to the request initiator.  Used primarily for testing.
+     * @param message
+     * @return
+     */
     public OgcResponse createGenericResponse(String message)
     {
         OgcResponse res = new OgcResponse(message.getBytes());
