@@ -1,5 +1,7 @@
 package org.geospeed.api;
 
+import java.util.Map;
+
 /********************************************************************************
  * 
  * @author Mike Abner
@@ -45,17 +47,35 @@ public interface IOgcResponse
 	  * plugin classes.  The return value will not be used in forming the actual
 	  * response to the requestor.
 	  * 
-	  * For example, to create on object to process WMS GetMap requests, a developer
-	  * can first create a MyWmsGetMapRequestProcessor class and simply have it return
-	  * an IOgcRespone object with the Response Type attribute set to "GetMap".  Running
-	  * the com.fgm.jp.ogc.test.wms.SmokeTest class will then allow the developer to 
-	  * determine whether or not their CLASSPATH and build time properties are set 
-	  * correctly.  See the FGM OGC Framework Developers Guide for more information.
-	  * 
 	  * @return String - A string representing the type of response that is contained
 	  * in the data array.
 	  */
 	 public String getResponseType();
      
+     /**
+      * The HTTP content type of the response.  e.g. text/xml or image/png.
+      * 
+      * @return String - The conent type of the response.
+      */
      public String getContentType();
+
+     /**
+      * @return The HTTP status code for this response
+      */
+     public int getStatus();
+     
+     /**
+      * @return a Map that will be included in the HTTP response date header
+      */
+     public Map<String, Long> getDateHeader();
+     
+     /**
+      * @return a Map that will be included in the HTTP response header.
+      */
+     public Map<String, String> getHeaders();
+     
+     /**
+      * @return a Map that will be included in the HTTP response int header
+      */
+     public Map<String, Integer> getIntHeaders();
 }
