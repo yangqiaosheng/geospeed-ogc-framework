@@ -45,9 +45,11 @@ public class OgcWmsRequestFactory
 	public static IOgcRequest createWmsRequest(Map<String, String> params) throws IOException
     {
         log.debug("Entering createWmsRequest(IOgcMap).");
-        
+
+        log.debug("Looking up the '" + OgcRequestKey.REQUEST.name() + "' parameter.");
         String requestParameter = (String)params.get(OgcRequestKey.REQUEST.name());
-            
+        log.debug("The '" + OgcRequestKey.REQUEST.name() + "' parameter value is '" + requestParameter + "'.");
+        
         if (requestParameter == null || requestParameter.equals(""))
         {
             StringBuffer msg = new StringBuffer("The " + OgcRequestKey.REQUEST.name() + " parameter was null.");
@@ -58,49 +60,51 @@ public class OgcWmsRequestFactory
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETCAPABILITIES.name())
                 || requestParameter.equalsIgnoreCase(WebMappingServiceKey.CAPABILITIES.name()))
         {
-            log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetCapabilitiesRequest");
+            log.debug("Exiting createWmsRequest(Map).  Returning an IOgcWmsGetCapabilitiesRequest");
             return new OgcWmsGetCapabilitiesRequest(params);
         }
         
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETMAP.name())
                 ||requestParameter.equalsIgnoreCase(WebMappingServiceKey.MAP.name()))
         {
-            log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetMapRequest.");
+            log.debug("Exiting createWmsRequest(Map).  Returning an IOgcWmsGetMapRequest.");
             return new OgcWmsGetMapRequest(params);
         }
         
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETFEATUREINFO.name())
                 || requestParameter.equalsIgnoreCase(WebMappingServiceKey.FEATUREINFO.name()))
         {
-            log.debug("Exiting createWmsRequest.  Returning an OgcWmsGetFeatureInfoRequest.");
+            log.debug("Exiting createWmsRequest(Map).  Returning an IOgcWmsGetFeatureInfoRequest.");
             return new OgcWmsGetFeatureInfoRequest(params);
         }
         
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.DESCRIBELAYER.name()))
         {
-            log.debug("Exiting createWmsRequest.  Returning an OgcWmsDescribeLayerRequest.");
+            log.debug("Exiting createWmsRequest(Map).  Returning an IOgcWmsDescribeLayerRequest.");
             return new OgcWmsDescribeLayerRequest(params);
         }
         
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETLEGENDGRAPHIC.name()))
         {
-            log.debug("Exiting createWmsREquest. Returning an OgcWmsGetLegendGraphicRequest.");
+            log.debug("Exiting createWmsRequest(Map). Returning an IOgcWmsGetLegendGraphicRequest.");
             return new OgcWmsGetLegendGraphicRequest(params);
         }
         
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETSYTLES.name()))
         {
-            log.debug("Exiting createWmsREquest. Returning an OgcWmsGetStylesRequest.");
+            log.debug("Exiting createWmsRequest(Map). Returning an IOgcWmsGetStylesRequest.");
             return new OgcWmsGetStylesRequest(params);
         }
         
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.PUTSTYLES.name()))
         {
-            log.debug("Exiting createWmsREquest. Returning an OgcWmsPutStylesRequest.");
+            log.debug("Exiting createWmsRequest(Map). Returning an IOgcWmsPutStylesRequest.");
             return new OgcWmsPutStylesRequest(params);
         }
         
-        log.error("No IOgcWmsRequest could be created from the specified parameters.");
-        throw new IOException("No IOgcWmsRequest object could be created from the REQUEST parameter '" + requestParameter + "'");
+        String msg = "No IOgcWmsRequest object could be created from the REQUEST parameter '" + requestParameter + "'. "; 
+        log.error(msg);
+        log.debug("Exiting createWmsRequest(Map).");
+        throw new IOException(msg);
     }
 }

@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geospeed.api.wms.IOgcWmsGetStylesRequest;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebMappingServiceKey;
@@ -18,8 +19,12 @@ public class OgcWmsGetStylesRequest implements IOgcWmsGetStylesRequest
     private String request;
     private Map<String, String> vendorParams = new HashMap<String, String>();
     
+    private Logger log = Logger.getLogger(this.getClass());
+    
     public OgcWmsGetStylesRequest(Map<String, String> params)
     {
+        log.debug("Entering OgcWmsGetStylesRequest(Map).");
+        
         version = params.remove(OgcRequestKey.VERSION.name());
         service = params.remove(OgcRequestKey.SERVICE.name());
         request = params.remove(OgcRequestKey.REQUEST.name());
@@ -36,6 +41,15 @@ public class OgcWmsGetStylesRequest implements IOgcWmsGetStylesRequest
         }        
         
         vendorParams = params;
+        
+        log.debug("Created an OgcWmsGetStylesRequest with parameter:value pairs - \n" +
+                "\t" + OgcRequestKey.VERSION.name() + " : " + version + "\n" +
+                "\t" + OgcRequestKey.REQUEST.name() + " : " + request + "\n" +
+                "\t" + OgcRequestKey.SERVICE.name() + " : " + service + "\n" +
+                "\t" + WebMappingServiceKey.SLDVER.name() + " : " + sldVersion + "\n" +
+                "\t" + WebMappingServiceKey.LAYERS.name() + " : " + tmp + "\n" +
+                "\tand " + vendorParams.size() + " vendor specific parameters.");
+        log.debug("Exiting OgcWmsGetStylesRequest(Map).");
     }
     
     public List<String> getLayers()
