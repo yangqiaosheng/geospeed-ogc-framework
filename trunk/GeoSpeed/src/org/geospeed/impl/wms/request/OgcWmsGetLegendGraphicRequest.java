@@ -3,6 +3,7 @@ package org.geospeed.impl.wms.request;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geospeed.api.wms.IOgcWmsGetLegendGraphicRequest;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebMappingServiceKey;
@@ -25,8 +26,12 @@ public class OgcWmsGetLegendGraphicRequest implements IOgcWmsGetLegendGraphicReq
     private String exceptions;
     private Map<String, String> vendorParams = new HashMap<String, String>();
     
+    private Logger log = Logger.getLogger(this.getClass());
+    
     public OgcWmsGetLegendGraphicRequest(Map<String, String> params)
     {
+        log.debug("Entering OgcWmsGetLegendGraphicRequest(Map).");
+        
         service = params.remove(OgcRequestKey.SERVICE.name());
         version = params.remove(OgcRequestKey.VERSION.name());
         request = params.remove(OgcRequestKey.REQUEST.name());
@@ -42,6 +47,24 @@ public class OgcWmsGetLegendGraphicRequest implements IOgcWmsGetLegendGraphicReq
         height = params.remove(WebMappingServiceKey.HEIGHT.name());
         exceptions = params.remove(WebMappingServiceKey.EXCEPTIONS.name());
         vendorParams = params;
+        
+        log.debug("Created an OgcWmsGetLegendGraphicRequest with parameter:value pairs - \n" +
+                "\t" + OgcRequestKey.VERSION.name() + " : " + version + "\n" +
+                "\t" + OgcRequestKey.REQUEST.name() + " : " + request + "\n" +
+                "\t" + OgcRequestKey.SERVICE.name() + " : " + service + "\n" +
+                "\t" + WebMappingServiceKey.LAYER.name() + " : " + layer + "\n" +
+                "\t" + WebMappingServiceKey.STYLE.name() + " : " + style + "\n" +
+                "\t" + WebMappingServiceKey.FEATURETYPE.name() + " : " + featureType + "\n" +
+                "\t" + WebMappingServiceKey.RULE.name() + " : " + rule + "\n" +
+                "\t" + WebMappingServiceKey.SCALE.name() + " : " + scale + "\n" +
+                "\t" + WebMappingServiceKey.SLD.name() + " : " + sld + "\n" +
+                "\t" + WebMappingServiceKey.SLD_BODY.name() + " : " + sldBody + "\n" +
+                "\t" + WebMappingServiceKey.FORMAT.name() + " : " + format + "\n" +
+                "\t" + WebMappingServiceKey.WIDTH.name() + " : " + width + "\n" +
+                "\t" + WebMappingServiceKey.HEIGHT.name() + " : " + height + "\n" +
+                "\t" + WebMappingServiceKey.EXCEPTIONS.name() + " : " + exceptions + "\n" +
+                "\tand " + vendorParams.size() + " vendor specific parameters.");
+        log.debug("Exiting OgcWmsGetLegendGraphicRequest(Map).");
     }
     
     public String getLayer()

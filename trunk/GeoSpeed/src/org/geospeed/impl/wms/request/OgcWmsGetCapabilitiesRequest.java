@@ -4,6 +4,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geospeed.api.wms.IOgcWmsGetCapabilitiesRequest;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebMappingServiceKey;
@@ -19,8 +20,12 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
     private String updateSequence;
     private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
 	
+    private Logger log = Logger.getLogger(this.getClass());
+    
 	public OgcWmsGetCapabilitiesRequest(Map<String, String> params)
 	{
+        log.debug("Entering OgcWmsGetCapabilitiesRequest(Map).");
+        
 		service = params.remove(OgcRequestKey.SERVICE.name());
         wmtver = params.remove(OgcRequestKey.WMTVER.name());
 		version = params.remove(OgcRequestKey.VERSION.name());
@@ -29,6 +34,16 @@ public class OgcWmsGetCapabilitiesRequest implements IOgcWmsGetCapabilitiesReque
         updateSequence = params.remove(WebMappingServiceKey.UPDATESEQUENCE.name());
 
         vendorSpecificParams = params;
+        
+        log.debug("Created an OgcWmsGetCapabilitiesRequest with parameter:value pairs - \n" +
+                "\t" + OgcRequestKey.WMTVER.name() + " : " + wmtver + "\n" +
+                "\t" + OgcRequestKey.VERSION.name() + " : " + version + "\n" +
+                "\t" + OgcRequestKey.REQUEST.name() + " : " + request + "\n" +
+                "\t" + OgcRequestKey.SERVICE.name() + " : " + service + "\n" +
+                "\t" + WebMappingServiceKey.FORMAT.name() + " : " + format + "\n" +
+                "\t" + WebMappingServiceKey.UPDATESEQUENCE.name() + " : " + updateSequence + "\n" +
+                "\tand " + vendorSpecificParams.size() + " vendor specific parameters.");
+        log.debug("Exiting OgcWmsGetCapabilitiesRequest(Map).");
 	}
 	
 	public String getService() 

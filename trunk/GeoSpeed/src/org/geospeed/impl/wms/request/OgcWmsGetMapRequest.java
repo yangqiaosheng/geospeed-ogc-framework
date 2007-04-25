@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geospeed.api.wms.IOgcWmsGetMapRequest;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebMappingServiceKey;
@@ -41,8 +42,12 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
     private String time;
     private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
     
+    private Logger log = Logger.getLogger(this.getClass());
+    
 	public OgcWmsGetMapRequest(Map<String, String> params)
 	{
+        log.debug("Entering OgcWmsGetMapRequest(Map).");
+        
 		version = params.remove(OgcRequestKey.VERSION.name());
         wmtver = params.remove(OgcRequestKey.WMTVER.name());
 		request = params.remove(OgcRequestKey.REQUEST.name());
@@ -72,7 +77,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 			for (int i = 0; i < tmpLayers.length; i++)
 				layers.add(tmpLayers[i].trim());
 		}
-		
+		String tmplayers = tmp;
 		tmp = params.remove(WebMappingServiceKey.STYLES.name());
         
 		if (tmp != null && !tmp.equals(""))
@@ -82,11 +87,13 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 			for (int i = 0; i < tmpStyles.length; i++)
 				styles.add(tmpStyles[i].trim());
 		}
+
+        String tmpbox = params.remove(WebMappingServiceKey.BBOX.name());
         
         if (params.get("BBOX") != null)
         {
-            String[] tmpBbox = (params.remove(WebMappingServiceKey.BBOX.name())).split(",");
-            
+            String[] tmpBbox = tmpbox.split(",");
+
             if (tmpBbox.length == 4)
             {
                 minx = tmpBbox[0];
@@ -97,6 +104,32 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
         }
         
         vendorSpecificParams = params;
+        
+        log.debug("Created an OgcWmsGetMapRequest with parameter:value pairs - \n" +
+                "\t" + OgcRequestKey.WMTVER.name() + " : " + wmtver + "\n" +
+                "\t" + OgcRequestKey.VERSION.name() + " : " + version + "\n" +
+                "\t" + OgcRequestKey.REQUEST.name() + " : " + request + "\n" +
+                "\t" + OgcRequestKey.SERVICE.name() + " : " + service + "\n" +
+                "\t" + WebMappingServiceKey.LAYERS.name() + " : " + tmplayers + "\n" +
+                "\t" + WebMappingServiceKey.STYLES.name() + " : " + tmp + "\n" +
+                "\t" + WebMappingServiceKey.CRS.name() + " : " + crs + "\n" +
+                "\t" + WebMappingServiceKey.SRS.name() + " : " + srs + "\n" +
+                "\t" + WebMappingServiceKey.BBOX.name() + " : " + tmpbox + "\n" +
+                "\t" + WebMappingServiceKey.SLD.name() + " : " + sld + "\n" +
+                "\t" + WebMappingServiceKey.WFS.name() + " : " + wfs + "\n" +
+                "\t" + WebMappingServiceKey.SLD_BODY.name() + " : " + sldBody + "\n" +
+                "\t" + WebMappingServiceKey.REMOTE_OWS_TYPE.name() + " : " + remoteOwsType + "\n" +
+                "\t" + WebMappingServiceKey.REMOTE_OWS_URL.name() + " : " + remoteOwsUrl + "\n" +
+                "\t" + WebMappingServiceKey.FORMAT.name() + " : " + format + "\n" +
+                "\t" + WebMappingServiceKey.WIDTH.name() + " : " + width + "\n" +
+                "\t" + WebMappingServiceKey.HEIGHT.name() + " : " + height + "\n" +
+                "\t" + WebMappingServiceKey.TRANSPARENT.name() + " : " + transparent + "\n" +
+                "\t" + WebMappingServiceKey.BGCOLOR.name() + " : " + bgColor + "\n" +
+                "\t" + WebMappingServiceKey.EXCEPTIONS.name() + " : " + exceptionFormat + "\n" +
+                "\t" + WebMappingServiceKey.ELEVATION.name() + " : " + elevation + "\n" +
+                "\t" + WebMappingServiceKey.TIME.name() + " : " + time + "\n" +
+                "\tand " + vendorSpecificParams.size() + " vendor specific parameters.");
+        log.debug("Exiting OgcWmsGetMapRequest(Map).");
 	}
 	
 	public List<String> getLayers() 

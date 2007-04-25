@@ -73,9 +73,7 @@ public class OgcWmsRequestProcessorFactory
 	private static Logger log = Logger.getLogger(OgcWmsRequestProcessorFactory.class);
     private Properties processors = new Properties();
 	private boolean loaded = false;
-    private String msgPart1 = "An error occured loading the ";
-    private String msgPart2 = " class.  Either the class was not specified in the processor.properties " +
-            "file or the class that was specified in the processor.properties file could not be found.";
+    
 	
 	private OgcWmsRequestProcessorFactory()
 	{
@@ -123,18 +121,18 @@ public class OgcWmsRequestProcessorFactory
             
             if (is == null)
             {
-                log.error("Could not find the processor.properties file on the classpath.");
-                throw new IOException("Could not find the processor.properties file.  Check to make sure the" +
-                        "processor.properties file (or the folder that contains that file) is on the classpath of your application");
+                String msg = "Could not find the processor.properties file.  Check to make sure the" +
+                "processor.properties file (or the folder that contains that file) is on the classpath of your application. ";
+                log.error(msg);
+                throw new IOException(msg);
             }
             
 			me.processors.load(is);
 			me.loaded = true;
+            log.debug("The processor.properties file was successfully loaded from the classpath.");
 		}
 		
-		
-		
-        log.debug("Creating an IOgcRequestProcessor based on the REQUEST parameter '" + requestParameter + "'");
+        log.debug("Creating an IOgcRequestProcessor based on the REQUEST parameter '" + requestParameter + "'.");
         
         if (requestParameter.equalsIgnoreCase(WebMappingServiceKey.GETCAPABILITIES.name())
                 || requestParameter.equalsIgnoreCase(WebMappingServiceKey.CAPABILITIES.name()))
@@ -174,9 +172,10 @@ public class OgcWmsRequestProcessorFactory
             return createProcessor(OgcProcessorsKey.WMSPUTSTYLES);
         }
         
-        log.error("Could not create an IOgcRequestProcessor from the specified REQUEST parameter.");
+        String msg = "No wms request processor object could be created from the request parameter '" + requestParameter + "'";
+        log.error(msg);
         log.debug("Exiting createProcessor(String).");
-        throw new IOException("No wms request processor object could be created from the request parameter '" + requestParameter + "'");
+        throw new IOException(msg);
     }
     
     private IOgcRequestProcessor createProcessor(OgcProcessorsKey key) throws IOException
@@ -185,14 +184,18 @@ public class OgcWmsRequestProcessorFactory
         
         try
         {
+            log.debug("Attempting to create a '" + key.name() + "' processor.");
             processor = Class.forName(processors.getProperty(key.name()));
-            log.debug("Exiting createProcessor(String).  Returning " + key.name() + ".");
+            log.debug("Exiting createProcessor(String).  Returning '" + key.name() + "' class instance.");
             return (IOgcRequestProcessor)processor.newInstance();
         }
         catch (Exception e)
         {
-            log.error("Could not create a " + key.name() + ".");
-            throw new IOException(msgPart1 + key.name() + msgPart2);
+            String msgPart1 = "An error occured loading the '";
+            String msgPart2 = "' class instance.  Either the class was not specified in the processor.properties " +
+                    "file or the class that was specified in the processor.properties file could not be found.";
+            log.error(msgPart1 + key.name() + msgPart2);
+            throw new IOException();
         }
     }
 }

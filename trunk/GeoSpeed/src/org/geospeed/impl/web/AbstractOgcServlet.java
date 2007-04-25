@@ -3,7 +3,6 @@ package org.geospeed.impl.web;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -28,7 +27,7 @@ import org.geospeed.keys.ContentTypeKey;
  ********************************************************************************/
 public abstract class AbstractOgcServlet extends HttpServlet
 {
-    private Logger log = Logger.getLogger(AbstractOgcServlet.class);
+    private Logger log = Logger.getLogger(this.getClass());
     
     /**
      * Gathers the list of request parameters into an IOgcMap.  The keys that
@@ -49,7 +48,7 @@ public abstract class AbstractOgcServlet extends HttpServlet
             String value = httpReq.getParameter(param);
             params.put(param.toUpperCase(), value);
         
-            log.debug("Added parameter '" + param + "' with value '" + value + "'.");
+            log.debug("Added parameter '" + param + "' value '" + value + "'.");
         }
         
         log.debug("Exiting gatherRequestParameters(HttpServletRequest).");
@@ -140,9 +139,14 @@ public abstract class AbstractOgcServlet extends HttpServlet
      */
     public OgcResponse createGenericResponse(String message)
     {
+        log.debug("Entering createGenericResponse(String).");
+        
         OgcResponse res = new OgcResponse(message.getBytes());
         res.setContentType(ContentTypeKey.TEXT_PLAIN.name());
         
+        log.debug("Created a generic response with the message '" + message + "'.");
+        
+        log.debug("Exiting createGenericResponse(String).");
         return res;
     }
 }

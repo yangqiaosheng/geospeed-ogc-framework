@@ -27,22 +27,22 @@ import org.geospeed.keys.WebMappingServiceKey;
 public class OgcWmsServlet extends AbstractOgcServlet 
 {
     private static final long serialVersionUID = 0;
-    private Logger log = Logger.getLogger(OgcWmsServlet.class);
+    private Logger log = Logger.getLogger(this.getClass());
     
 	public void doGet(HttpServletRequest httpReq, HttpServletResponse httpRes)
 	{
-        log.info("Starting " + httpReq.getMethod() + " request recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser());
+        log.trace("Starting " + httpReq.getMethod() + " request recieved from '" + httpReq.getRemoteAddr() + "'.");
         long start = System.currentTimeMillis();
         
         log.debug("Attempting to gather parameters from the http request.");
         Map<String, String> params = gatherRequestParameters(httpReq);
         log.debug("Successfully gathered the request parameters.");
         
-        String service = params.get(OgcRequestKey.SERVICE);
+        String service = params.get(OgcRequestKey.SERVICE.name());
         
         //Check to make sure that the correct service is being called.  If not then 
         //the OgcWebMappingService class can't processes it and will blow up.
-        if (service != null && !service.equals(WebMappingServiceKey.SERVICE_NAME))
+        if (service != null && !service.equals(WebMappingServiceKey.SERVICE_NAME.name()))
         {    
             String msg = "Incorrect service type!  Check the web.xml to ensure that the URL that" +
             " forwards to this service is correct and that the correct URL is being" +
@@ -65,11 +65,22 @@ public class OgcWmsServlet extends AbstractOgcServlet
         log.debug("Successfully sent the IOgcResponse.");
         
         long end = System.currentTimeMillis();
-        log.info("Finished processing " + httpReq.getMethod() + " request that was recieved from " + httpReq.getRemoteAddr() + " initiated by user " + httpReq.getRemoteUser() + " Execution time: " + (end - start));
+        log.trace("Finished processing " + httpReq.getMethod() + " request that was recieved from '" + httpReq.getRemoteAddr() + "'. Execution time: " + (end - start) + ".");
 	}
 
 	public void doPost(HttpServletRequest httpReq, HttpServletResponse httpRes)
     {
-	    
+        log.trace("Starting " + httpReq.getMethod() + " request recieved from '" + httpReq.getRemoteAddr() + "'.");
+        long start = System.currentTimeMillis();   
+        
+        String msg = "The GeoSpeed OGC Framework does not currenty support POST requests for the WMS specification.  " +
+                "Please edit your capabilities document to remove all references to the HTTP POST method.";
+        log.debug(msg);
+        log.debug("Attempting to send Error response.");
+        sendResponse(httpRes, createGenericResponse(msg));
+        log.debug("Successfully sent Error response.");
+        
+        long end = System.currentTimeMillis();
+        log.trace("Finished processing " + httpReq.getMethod() + " request that was recieved from '" + httpReq.getRemoteAddr() + "'. Execution time: " + (end - start) + ".");
     }
 }

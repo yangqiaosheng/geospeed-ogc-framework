@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geospeed.api.wms.IOgcWmsDescribeLayerRequest;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebMappingServiceKey;
@@ -19,8 +20,12 @@ public class OgcWmsDescribeLayerRequest implements IOgcWmsDescribeLayerRequest
     private List<String> layers = new ArrayList<String>();
 	private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
     
+    private Logger log = Logger.getLogger(this.getClass());
+    
 	public OgcWmsDescribeLayerRequest(Map<String, String> params)
 	{
+        log.debug("Entering OgcWmsDescribeLayerRequest(Map).");
+        
 		version = params.remove(OgcRequestKey.VERSION.name());
 		request = params.remove(OgcRequestKey.REQUEST.name());
         service = params.remove(OgcRequestKey.SERVICE.name());
@@ -36,6 +41,14 @@ public class OgcWmsDescribeLayerRequest implements IOgcWmsDescribeLayerRequest
 		}
         
         vendorSpecificParams = params;
+        
+        log.debug("Created an OgcWmsDescribeLayerRequest with parameter:value pairs - \n" +
+                "\t" + OgcRequestKey.VERSION.name() + " : " + version + "\n" +
+                "\t" + OgcRequestKey.REQUEST.name() + " : " + request + "\n" +
+                "\t" + OgcRequestKey.SERVICE.name() + " : " + service + "\n" +
+                "\t" + WebMappingServiceKey.LAYER.name() + " : " + tmp + "\n" +
+                "\tand " + vendorSpecificParams.size() + " vendor specific parameters.");
+        log.debug("Exiting OgcWmsDescribeLayerRequest(Map).");
 	}
 	
 	public List<String> getLayers() 

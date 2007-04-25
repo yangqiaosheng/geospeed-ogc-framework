@@ -6,6 +6,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.log4j.Logger;
 import org.geospeed.api.wms.IOgcWmsGetFeatureInfoRequest;
 import org.geospeed.api.wms.IOgcWmsGetMapRequest;
 import org.geospeed.keys.OgcRequestKey;
@@ -29,8 +30,12 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
     private String exceptions;
 	private Map<String, String> vendorSpecificParams = new HashMap<String, String>();
     
+    private Logger log = Logger.getLogger(this.getClass());
+    
 	public OgcWmsGetFeatureInfoRequest(Map<String, String> params)
 	{
+        log.debug("Entering OgcWmsGetFeatureInfoRequest(Map).");
+        
 		version = (String)params.remove(OgcRequestKey.VERSION.name());
         wmtver = (String)params.remove(OgcRequestKey.WMTVER.name());
 		request = (String)params.remove(OgcRequestKey.REQUEST.name());
@@ -56,6 +61,22 @@ public class OgcWmsGetFeatureInfoRequest implements IOgcWmsGetFeatureInfoRequest
         mapRequest = new OgcWmsGetMapRequest(params);
         
         vendorSpecificParams = params;
+        
+        log.debug("Created an OgcWmsGetFeatureInfoRequest with parameter:value pairs - \n" +
+                "\t" + OgcRequestKey.WMTVER.name() + " : " + wmtver + "\n" +
+                "\t" + OgcRequestKey.VERSION.name() + " : " + version + "\n" +
+                "\t" + OgcRequestKey.REQUEST.name() + " : " + request + "\n" +
+                "\t" + OgcRequestKey.SERVICE.name() + " : " + service + "\n" +
+                "\t" + WebMappingServiceKey.INFO_FORMAT.name() + " : " + infoFormat + "\n" +
+                "\t" + WebMappingServiceKey.FEATURE_COUNT.name() + " : " + featureCount + "\n" +
+                "\t" + WebMappingServiceKey.I.name() + " : " + i + "\n" +
+                "\t" + WebMappingServiceKey.J.name() + " : " + j + "\n" +
+                "\t" + WebMappingServiceKey.X.name() + " : " + x + "\n" +
+                "\t" + WebMappingServiceKey.Y.name() + " : " + y + "\n" +
+                "\t" + WebMappingServiceKey.EXCEPTIONS.name() + " : " + exceptions + "\n" +
+                "\t" + WebMappingServiceKey.QUERY_LAYERS.name() + " : " + tmp + "\n" +
+                "\tand " + vendorSpecificParams.size() + " vendor specific parameters.");
+        log.debug("Exiting OgcWmsGetFeatureInfoRequest(Map).");
 	}
 	
 	public IOgcWmsGetMapRequest getMapRequest() 
