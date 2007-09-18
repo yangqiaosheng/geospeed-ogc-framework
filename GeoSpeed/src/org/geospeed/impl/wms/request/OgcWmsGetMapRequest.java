@@ -90,7 +90,7 @@ public class OgcWmsGetMapRequest implements IOgcWmsGetMapRequest
 
         String tmpbox = params.remove(WebMappingServiceKey.BBOX.name());
         
-        if (params.get("BBOX") != null)
+        if (tmpbox != null && !tmpbox.equals(""))
         {
             String[] tmpBbox = tmpbox.split(",");
 
