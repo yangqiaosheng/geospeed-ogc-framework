@@ -10,11 +10,12 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
+import java.security.Principal;
 import org.apache.log4j.Logger;
 import org.geospeed.api.IOgcResponse;
 import org.geospeed.impl.OgcResponse;
 import org.geospeed.keys.ContentTypeKey;
+import org.geospeed.keys.OgcRequestKey;
 
 /********************************************************************************
  * 
@@ -51,6 +52,29 @@ public abstract class AbstractOgcServlet extends HttpServlet
             log.debug("Added parameter '" + param + "' value '" + value + "'.");
         }
         
+        Enumeration headerNames = httpReq.getHeaderNames();
+        Map<String, String> headers = new HashMap<String, String>();
+        
+        while (headerNames.hasMoreElements())
+        {
+        	String header = (String)headerNames.nextElement();
+        	String value = (String)httpReq.getHeader(header);
+        	headers.put(header.toUpperCase(), value);
+        	
+        	log.debug("Added header '" + header + "' value '" + value + "'.");
+        }
+        
+        //Add other HttpServletRequest info
+        params.put(OgcRequestKey.AUTHTYPE.name(), httpReq.getAuthType());
+        params.put(OgcRequestKey.METHOD.name(), httpReq.getMethod());
+        params.put(OgcRequestKey.PATHINFO.name(), httpReq.getPathInfo());
+        params.put(OgcRequestKey.PATHTRANSLATED.name(), httpReq.getPathTranslated());
+        params.put(OgcRequestKey.QUERYSTRING.name(), httpReq.getQueryString());
+        params.put(OgcRequestKey.REMOTEUSER.name(), httpReq.getRemoteUser());
+        params.put(OgcRequestKey.REQUESTEDSESSIONID.name(), httpReq.getRequestedSessionId());
+        params.put(OgcRequestKey.REQUESTURI.name(), httpReq.getRequestURI());
+        params.put(OgcRequestKey.SERVLETPATH.name(), httpReq.getServletPath());
+
         log.debug("Exiting gatherRequestParameters(HttpServletRequest).");
         return params;
     }
