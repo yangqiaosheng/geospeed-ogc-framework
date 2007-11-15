@@ -32,7 +32,7 @@ public abstract class AbstractOgcServlet extends HttpServlet
     
     /**
      * Gathers the list of request parameters into an IOgcMap.  The keys that
-     * access the entries in the IOgcMap are converte to UPPERCASE Strings.
+     * access the entries in the IOgcMap are convert to UPPERCASE Strings.
      * 
      * @return an IOgcMap containing all of the parameters in the HttpRequest.
      */
