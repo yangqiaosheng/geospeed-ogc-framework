@@ -1,11 +1,12 @@
 package org.geospeed.impl.wms.factory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Properties;
+import java.util.ServiceLoader;
 
 import org.apache.log4j.Logger;
 import org.geospeed.api.IOgcRequestProcessor;
+import org.geospeed.impl.OgcRequestProcessorFactory;
 import org.geospeed.keys.OgcProcessorsKey;
 import org.geospeed.keys.WebMappingServiceKey;
 
@@ -22,9 +23,9 @@ import org.geospeed.keys.WebMappingServiceKey;
  * OGC specifications.
  * 
  * While it is possible for all of the request types to be handled by one class, 
- * it is strongly discouraged as it breaks the design principles of Seperation of
- * Concerns, couhesion and coupling, etc.  Instead, the developer should create
- * independant classes that handle the various request types.
+ * it is strongly discouraged as it breaks the design principles of Separation of
+ * Concerns, cohesion and coupling, etc.  Instead, the developer should create
+ * independent classes that handle the various request types.
  * 
  * An example IOgcRequestProcessor is below:
  * 
@@ -67,13 +68,10 @@ import org.geospeed.keys.WebMappingServiceKey;
  * com.fgm.jp.ogc.test.wms.SmokeTest class to see if the wiring was successful.
  * 
  ********************************************************************************/
-public class OgcWmsRequestProcessorFactory
+public class OgcWmsRequestProcessorFactory extends OgcRequestProcessorFactory
 {	
 	private static OgcWmsRequestProcessorFactory me;
 	private static Logger log = Logger.getLogger(OgcWmsRequestProcessorFactory.class);
-    private Properties processors = new Properties();
-	private boolean loaded = false;
-    
 	
 	private OgcWmsRequestProcessorFactory()
 	{
@@ -113,24 +111,6 @@ public class OgcWmsRequestProcessorFactory
 	public IOgcRequestProcessor createProcessor(String requestParameter) throws IOException
     {	
         log.debug("Entering createProcessor(String).");
-        
-		if (!me.loaded)
-		{
-            log.debug("Opening the processor.properties file from the classpath.");
-			InputStream is = me.getClass().getClassLoader().getResourceAsStream("processors.properties");
-            
-            if (is == null)
-            {
-                String msg = "Could not find the processor.properties file.  Check to make sure the" +
-                "processor.properties file (or the folder that contains that file) is on the classpath of your application. ";
-                log.error(msg);
-                throw new IOException(msg);
-            }
-            
-			me.processors.load(is);
-			me.loaded = true;
-            log.debug("The processor.properties file was successfully loaded from the classpath.");
-		}
 		
         log.debug("Creating an IOgcRequestProcessor based on the REQUEST parameter '" + requestParameter + "'.");
         
@@ -176,26 +156,5 @@ public class OgcWmsRequestProcessorFactory
         log.error(msg);
         log.debug("Exiting createProcessor(String).");
         throw new IOException(msg);
-    }
-    
-    private IOgcRequestProcessor createProcessor(OgcProcessorsKey key) throws IOException
-    {
-        Class processor;
-        
-        try
-        {
-            log.debug("Attempting to create a '" + key.name() + "' processor.");
-            processor = Class.forName(processors.getProperty(key.name()));
-            log.debug("Exiting createProcessor(String).  Returning '" + key.name() + "' class instance.");
-            return (IOgcRequestProcessor)processor.newInstance();
-        }
-        catch (Exception e)
-        {
-            String msgPart1 = "An error occured loading the '";
-            String msgPart2 = "' class instance.  Either the class was not specified in the processor.properties " +
-                    "file or the class that was specified in the processor.properties file could not be found.";
-            log.error(msgPart1 + key.name() + msgPart2);
-            throw new IOException();
-        }
     }
 }
