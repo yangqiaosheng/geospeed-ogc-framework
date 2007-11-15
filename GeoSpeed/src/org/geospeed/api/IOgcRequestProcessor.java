@@ -1,5 +1,7 @@
 package org.geospeed.api;
 
+import org.geospeed.keys.OgcProcessorsKey;
+
 
 /********************************************************************************
  * 
@@ -31,4 +33,11 @@ public interface IOgcRequestProcessor
 	 * requests, IMAGE data for WMS GetMap requests, etc.).
 	 */
 	public IOgcResponse processRequest(IOgcRequest request);
+	
+	/**
+	 * Must return one of the keys defined in org.geospeed.keys.OgcProcessorsKey!
+	 * 
+	 * @return
+	 */
+	public OgcProcessorsKey getProcessorType();
 }
