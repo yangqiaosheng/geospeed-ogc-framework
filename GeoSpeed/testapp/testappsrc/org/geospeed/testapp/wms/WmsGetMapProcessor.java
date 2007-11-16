@@ -10,6 +10,7 @@ import org.geospeed.api.IOgcResponse;
 import org.geospeed.api.wms.IOgcWmsGetMapRequest;
 import org.geospeed.impl.OgcResponse;
 import org.geospeed.keys.ContentTypeKey;
+import org.geospeed.keys.OgcProcessorsKey;
 
 public class WmsGetMapProcessor implements IOgcRequestProcessor
 {
@@ -79,4 +80,12 @@ public class WmsGetMapProcessor implements IOgcRequestProcessor
         
         return new OgcResponse();
     }
+
+	@Override
+	public OgcProcessorsKey getProcessorType()
+	{
+		return OgcProcessorsKey.WMSGETMAP;
+	}
+    
+    
 }

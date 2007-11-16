@@ -3,28 +3,61 @@
 		<servlet-name>WMS</servlet-name>
 		<servlet-class>org.geospeed.impl.wms.web.OgcWmsServlet</servlet-class>
 	</servlet>
-	<!--
+	
 	<servlet>
 		<servlet-name>WFS</servlet-name>
-		<servlet-class>org.geospeed.ogc.impl.wfs.web.OgcWfsServlet</servlet-class>
+		<servlet-class>org.geospeed.impl.wfs.web.OgcWfsServlet</servlet-class>
 	</servlet>
+	<!--
 	<servlet>
 		<servlet-name>WCS</servlet-name>
-		<servlet-class>org.geospeed.ogc.impl.wcs.web.OgcWcsServlet</servlet-class>
+		<servlet-class>org.geospeed.impl.wcs.web.OgcWcsServlet</servlet-class>
 	</servlet>
--->
+	-->
 	<servlet-mapping>
 		<url-pattern>/wms</url-pattern>
 		<servlet-name>WMS</servlet-name>
 	</servlet-mapping>
-	<!-- 
+	 
 	<servlet-mapping>
 		<url-pattern>/wfs</url-pattern>
 		<servlet-name>WFS</servlet-name>
 	</servlet-mapping>
+	<!--
 	<servlet-mapping>
 		<url-pattern>/wcs</url-pattern>
 		<servlet-name>WCS</servlet-name>
 	</servlet-mapping>
 	-->
+	
+	<!--	
+	<security-constraint>
+  <web-resource-collection>
+    <web-resource-name>Entire Application</web-resource-name>
+    <url-pattern>/*</url-pattern>
+  </web-resource-collection>
+  <auth-constraint>
+    <role-name>ogc</role-name>
+  </auth-constraint>
+</security-constraint> 			
+
+<login-config>
+  <auth-method>BASIC</auth-method>
+  <realm-name>ogc app</realm-name>
+</login-config>
+
+<security-role>
+  <description>
+    The role that is required to log in to the Manager Application
+  </description>
+  <role-name>ogc</role-name>
+</security-role>
+	
+	
+-->
+	
+	
+	
+	
+	
 </web-app>

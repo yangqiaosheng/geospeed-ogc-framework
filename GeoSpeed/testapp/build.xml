@@ -18,20 +18,22 @@
 		    	debug="true" debuglevel="lines,vars,source"/>
 	</target>
 
-	<target name="jar" description="Create a jar file">
-			<jar destfile="./bin/geospeed_testapp.jar" basedir="./classes"/>
-		</target>
+		<target name="jar" description="Create a jar file">
+			<!--		<jar destfile="./bin/geospeed_testapp.jar" basedir="./classes"/> -->
+		</target> 
 	
 	<target name="war" description="Build a war file">
 		<war destfile="./bin/geospeed_testapp.war" webxml="./web/web.xml">
-			<lib file="./bin/geospeed_testapp.jar"/>
+			<!--<lib file="./bin/geospeed_testapp.jar"/>-->
 			<lib file="./lib/geospeed.jar"/>
 			<lib file="./lib/log4j-1.2.13.jar"/>
-			<classes file="./processors.properties"/>
+			<lib file="./lib/testapp.jar"/>  <!-- has the plugins!-->
+			<!--<classes file="./processors.properties"/> -->
 			<classes file="./data/wms_capabilities_1_0_0.xml"/>
 			<classes file="./data/wms_capabilities_1_1_0.xml"/>
 			<classes file="./data/wms_capabilities_1_1_1.xml"/>
 			<classes file="./data/wms_capabilities_1_3_0.xml"/>
+			<classes file="./data/wfs_capabilities_1_1.xml"/>			
 			<classes file="./data/wms.gif"/>
 			<classes file="./data/wms.jpg"/>
 			<classes file="./data/wms.png"/>

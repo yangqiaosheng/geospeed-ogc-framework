@@ -54,12 +54,12 @@
           <Get>
             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
              xlink:type="simple"
-             xlink:href="http://hostname/path?" />
+             xlink:href="http://localhost:8080/geospeed_testapp/wms?" />
           </Get>
           <Post>
             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
              xlink:type="simple"
-             xlink:href="http://hostname/path?" />
+             xlink:href="http://localhost:8080/geospeed_testapp/wms?" />
           </Post>
         </HTTP>
       </DCPType>
@@ -75,7 +75,7 @@
             is only a prefix to which a query string is appended. -->
             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
              xlink:type="simple"
-             xlink:href="http://hostname/path?" />
+             xlink:href="http://localhost:8080/geospeed_testapp/wms?" />
           </Get>
         </HTTP>
       </DCPType>
@@ -89,7 +89,7 @@
           <Get>
             <OnlineResource xmlns:xlink="http://www.w3.org/1999/xlink"
              xlink:type="simple"
-             xlink:href="http://hostname/path?" />
+             xlink:href="http://localhost:8080/geospeed_testapp/wms?" />
           </Get>
         </HTTP>
       </DCPType>
