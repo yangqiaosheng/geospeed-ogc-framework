@@ -1,0 +1,4 @@
+org.geospeed.testapp.wms.WmsGetCapabilitiesProcessor
+org.geospeed.testapp.wms.WmsDescribeLayerProcessor
+org.geospeed.testapp.wms.WmsGetMapProcessor
+org.geospeed.testapp.wfs.WfsGetCapabilitiesProcessor

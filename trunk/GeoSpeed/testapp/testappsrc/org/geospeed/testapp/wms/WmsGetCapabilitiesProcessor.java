@@ -10,6 +10,7 @@ import org.geospeed.api.IOgcResponse;
 import org.geospeed.api.wms.IOgcWmsGetCapabilitiesRequest;
 import org.geospeed.impl.OgcResponse;
 import org.geospeed.keys.ContentTypeKey;
+import org.geospeed.keys.OgcProcessorsKey;
 import org.geospeed.keys.WebMappingServiceKey;
 
 public class WmsGetCapabilitiesProcessor implements IOgcRequestProcessor
@@ -58,4 +59,11 @@ public class WmsGetCapabilitiesProcessor implements IOgcRequestProcessor
         
         return res;
     }
+
+	public OgcProcessorsKey getProcessorType()
+	{
+		return OgcProcessorsKey.WMSGETCAPABILITIES;
+	}
+    
+    
 }
