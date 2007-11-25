@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.geospeed.api.IOgcRequest;
 
-public interface IOgcWfsGetFeatureRequest extends IOgcRequest
+public interface IOgcWfsGetFeatureRequest extends IOgcWfsRequest
 {
 	public String getPropertyName();
 	

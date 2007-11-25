@@ -1,9 +1,15 @@
 package org.geospeed.impl.wfs.web;
 
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.log4j.Logger;
 import org.geospeed.api.IOgcResponse;
@@ -12,6 +18,10 @@ import org.geospeed.impl.web.AbstractOgcServlet;
 import org.geospeed.impl.wfs.OgcWebFeatureService;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebFeatureServiceKey;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 public class OgcWfsServlet extends AbstractOgcServlet
 {
@@ -62,12 +72,42 @@ public class OgcWfsServlet extends AbstractOgcServlet
         log.trace("Starting " + httpReq.getMethod() + " request recieved from '" + httpReq.getRemoteAddr() + "'.");
         long start = System.currentTimeMillis();   
         
-        String msg = "The GeoSpeed OGC Framework does not currenty support POST requests for the WFS specification.  " +
-                "Please edit your capabilities document to remove all references to the HTTP POST method.";
-        log.debug(msg);
-        log.debug("Attempting to send Error response.");
-        sendResponse(httpRes, createGenericResponse(msg));
-        log.debug("Successfully sent Error response.");
+        log.debug("Attempting to gather parameters from the http request.");
+        Map<String, String> params = gatherRequestParameters(httpReq);
+        log.debug("Successfully gathered the request parameters.");
+        
+        String xml = ""; 
+        
+        try
+        {
+        	BufferedReader br = httpReq.getReader();
+        	
+        	String s = "";        	
+        	
+        	while((s = br.readLine()) != null)
+        	{
+        		xml = xml + s;
+        	}
+        	
+        	log.debug(xml);
+        }
+        catch (IOException ioe)
+        {
+        	ioe.printStackTrace();
+        }
+        
+        params.put(WebFeatureServiceKey.XML.name(), xml);
+        
+        IOgcService wfs = new OgcWebFeatureService();
+        
+        log.debug("Attempting to execute the WFS request.");
+        IOgcResponse wfsRes = wfs.executeRequest(params);
+        log.debug("Successfully executed the WFS request.");
+        
+        log.debug("Attempting to send the IOgcResponse.");
+        sendResponse(httpRes, wfsRes);
+        log.debug("Successfully sent the IOgcResponse.");
+        
         
         long end = System.currentTimeMillis();
         log.trace("Finished processing " + httpReq.getMethod() + " request that was recieved from '" + httpReq.getRemoteAddr() + "'. Execution time: " + (end - start) + ".");

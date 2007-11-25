@@ -1,14 +1,24 @@
 package org.geospeed.impl.wfs.request;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.log4j.Logger;
 import org.geospeed.api.wfs.IOgcWfsGetFeatureRequest;
 import org.geospeed.keys.OgcRequestKey;
 import org.geospeed.keys.WebFeatureServiceKey;
+import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
 
 public class OgcWfsGetFeatureRequest implements IOgcWfsGetFeatureRequest
 {
@@ -22,6 +32,8 @@ public class OgcWfsGetFeatureRequest implements IOgcWfsGetFeatureRequest
 	private List<String> featureIds = new ArrayList<String>();
 	private String filter;
 	private String bbox;
+	private String outputFormat;
+	private String handle;
 	private Map<String, String> vendorParams = new HashMap<String, String>();
 	
 	private Logger log = Logger.getLogger(this.getClass());
@@ -33,10 +45,10 @@ public class OgcWfsGetFeatureRequest implements IOgcWfsGetFeatureRequest
 		service = params.remove(OgcRequestKey.SERVICE.name());
 		version = params.remove(OgcRequestKey.VERSION.name());
 		request = params.remove(OgcRequestKey.REQUEST.name());
-		propertyName = params.remove(WebFeatureServiceKey.PROPERTYNAME);
-		featureVersion = params.remove(WebFeatureServiceKey.FEATUREVERSION);
+		propertyName = params.remove(WebFeatureServiceKey.PROPERTYNAME.name());
+		featureVersion = params.remove(WebFeatureServiceKey.FEATUREVERSION.name());
 		
-		String mf = params.remove(WebFeatureServiceKey.MAXFEATURES);
+		String mf = params.remove(WebFeatureServiceKey.MAXFEATURES.name());
 		
 		try
 		{
@@ -69,12 +81,14 @@ public class OgcWfsGetFeatureRequest implements IOgcWfsGetFeatureRequest
 		for (int i = 0; i < tmp.length; i++)
 			featureIds.add(tmp[i]);
 		
-		filter = params.remove(WebFeatureServiceKey.FILTER);
-		bbox = params.remove(WebFeatureServiceKey.BBOX);		
+		filter = params.remove(WebFeatureServiceKey.FILTER.name());
+		bbox = params.remove(WebFeatureServiceKey.BBOX.name());	
+		outputFormat = params.remove(WebFeatureServiceKey.OUTPUTFORMAT.name());
         vendorParams = params;
         
         log.debug("Exiting OgcWfsGetFeatureRequest(Map).");
 	}
+
 	
 	public String getRequest()
 	{
