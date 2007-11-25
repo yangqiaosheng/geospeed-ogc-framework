@@ -78,7 +78,7 @@
             </ows:HTTP>
          </ows:DCP>
          <ows:Parameter name="AcceptVersions">
-            <ows:Value>1.1.0</ows:Value>
+		 <!-- <ows:Value>1.1.0</ows:Value> -->
             <ows:Value>1.0.0</ows:Value>
          </ows:Parameter>
          <ows:Parameter name="AcceptFormats">
@@ -98,7 +98,7 @@
          <ows:DCP>
             <ows:HTTP>
 		    <ows:Get  xlink:href="http://localhost:8080/geospeed_testapp/wfs"/>
-               <ows:Post xlink:href="http://localhost:8080/geospeed_testapp/wfs"/>
+		    <ows:Post xlink:href="http://localhost:8080/geospeed_testapp/wfs"/>
             </ows:HTTP>
          </ows:DCP>
          <ows:Parameter name="outputFormat">
@@ -109,7 +109,7 @@
          <ows:DCP>
             <ows:HTTP>
                <ows:Get  xlink:href="http://localhost:8080/geospeed_testapp/wfs"/>
-               <ows:Post xlink:href="http://localhost:8080/geospeed_testapp/wfs"/>
+	       <ows:Post xlink:href="http://localhost:8080/geospeed_testapp/wfs"/>
             </ows:HTTP>
          </ows:DCP>
          <ows:Parameter name="resultType">

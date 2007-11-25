@@ -30,6 +30,8 @@ public class WebFeatureServiceKey extends Key
     public static final WebFeatureServiceKey LOCKACTION = new WebFeatureServiceKey("LOCKACTION");
     public static final WebFeatureServiceKey OPERATION = new WebFeatureServiceKey("OPERATION");
     public static final WebFeatureServiceKey RELEASEACTION = new WebFeatureServiceKey("RELEASEACTION");
+    public static final WebFeatureServiceKey HANDLE = new WebFeatureServiceKey("HANDLE");
+    public static final WebFeatureServiceKey XML = new WebFeatureServiceKey("XML");
  
     private WebFeatureServiceKey(String _name)
     {
