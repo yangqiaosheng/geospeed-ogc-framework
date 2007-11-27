@@ -30,6 +30,8 @@ public class OgcWfsServlet extends AbstractOgcServlet
     
 	public void doGet(HttpServletRequest httpReq, HttpServletResponse httpRes)
 	{
+		log.debug("doGet::enter.");
+		
 		log.trace("Starting " + httpReq.getMethod() + " request recieved from '" + httpReq.getRemoteAddr() + "'.");
         long start = System.currentTimeMillis();
         
@@ -65,17 +67,21 @@ public class OgcWfsServlet extends AbstractOgcServlet
         
         long end = System.currentTimeMillis();
         log.trace("Finished processing " + httpReq.getMethod() + " request that was recieved from '" + httpReq.getRemoteAddr() + "'. Execution time: " + (end - start) + ".");
+        
+        log.debug("doGet::exit.");
 	}
 	
 	public void doPost(HttpServletRequest httpReq, HttpServletResponse httpRes)
     {
+		log.debug("doPost::enter.");
+		
         log.trace("Starting " + httpReq.getMethod() + " request recieved from '" + httpReq.getRemoteAddr() + "'.");
         long start = System.currentTimeMillis();   
         
         log.debug("Attempting to gather parameters from the http request.");
         Map<String, String> params = gatherRequestParameters(httpReq);
         log.debug("Successfully gathered the request parameters.");
-        
+        /*
         String xml = ""; 
         
         try
@@ -97,7 +103,7 @@ public class OgcWfsServlet extends AbstractOgcServlet
         }
         
         params.put(WebFeatureServiceKey.XML.name(), xml);
-        
+        */
         IOgcService wfs = new OgcWebFeatureService();
         
         log.debug("Attempting to execute the WFS request.");
@@ -111,5 +117,7 @@ public class OgcWfsServlet extends AbstractOgcServlet
         
         long end = System.currentTimeMillis();
         log.trace("Finished processing " + httpReq.getMethod() + " request that was recieved from '" + httpReq.getRemoteAddr() + "'. Execution time: " + (end - start) + ".");
+        
+        log.debug("doPost::exit.");
     }
 }

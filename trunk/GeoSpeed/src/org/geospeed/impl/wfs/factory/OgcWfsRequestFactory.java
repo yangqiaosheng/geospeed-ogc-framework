@@ -49,7 +49,7 @@ public class OgcWfsRequestFactory
      */
 	public static IOgcRequest createWfsRequest(Map<String, String> params) throws IOException
     {
-        log.debug("Entering createWfsRequest(IOgcMap).");
+        log.debug("Entering createWfsRequest(Map).");
 
         params = parseXML(params);
         
@@ -89,9 +89,12 @@ public class OgcWfsRequestFactory
 
 	private static Map<String, String> parseXML(Map<String, String> params)
 	{
+		log.debug("parseXML::enter.");
 		String service = "";
         
 		String xml = params.get(WebFeatureServiceKey.XML.name());
+		
+		log.debug("XML: " + xml);
 		
 		if (xml != null && !xml.equals(""))
 		{
@@ -152,6 +155,7 @@ public class OgcWfsRequestFactory
 	        }
 		}
 	
+		log.debug("parseXML::exit.");
         return params;
 	}
 }
