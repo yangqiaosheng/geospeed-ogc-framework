@@ -10,7 +10,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Principal;
+
 import org.apache.log4j.Logger;
 import org.geospeed.api.IOgcResponse;
 import org.geospeed.impl.OgcResponse;
@@ -90,10 +90,13 @@ public abstract class AbstractOgcServlet extends HttpServlet
     {      
         log.debug("Entering sendResponse(HttpServletResponse, IOgcResponse).");
         
+        if (ogcRes == null)
+        	ogcRes = new OgcResponse("The IOgcRequestProcessor returned a null response.".getBytes(), ContentTypeKey.TEXT_PLAIN);
+        
         try
         {
-            httpRes.setContentType(ogcRes.getContentType());
-            httpRes.setContentLength(ogcRes.getLength());
+       		httpRes.setContentType(ogcRes.getContentType());
+        	httpRes.setContentLength(ogcRes.getLength());
             
             Map<String, Long> dateHeader = ogcRes.getDateHeader();
             
